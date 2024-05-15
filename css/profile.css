@@ -1,0 +1,355 @@
+/* profile.css */
+* {
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+}
+body {
+    background-image: url("../assets/images/contact");
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-attachment: fixed; 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative; /* Add position relative */
+  }
+  body:before {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.5); /* Transparent gray color */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place the pseudo-element behind other content */
+  }
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.edit-profile-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-profile-button:hover {
+    background-color: #0056b3;
+}
+
+/* Header Styles */
+header {
+    font-style: normal;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    padding: 10px 20px; /* Added padding */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.title h1 {
+    text-align: left;
+    font-size: 26px;
+    margin: 0;
+    color: #fff;
+    font-size: 20px;
+    justify-content: left;
+    width: 400px;
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+    font-weight: 500; /* Adjust font weight as needed */ 
+}
+
+nav {
+    max-width: 1300px; /* Adjust the max-width value as needed */
+    width: 100%;
+    padding: 1.3rem 2rem; /* Increase the padding to add more space */
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+    transition: transform 0.3s ease-in-out; /* Add transition for transform property */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-left: auto; /* Align the nav ul content to the right */
+}
+
+nav li {
+    margin-top: 7px;
+}
+
+nav ul li:not(:last-child) {
+    margin-right: 5px; /* Add margin between list items */
+}
+
+nav ul li a {
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 20px;
+    border-radius: 5px;
+    color: white; /* Base color */
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Add transform transition */
+}
+
+nav ul li a:hover {
+    cursor: pointer;
+    color: yellow; /* Bright color on hover */
+    transform: translateZ(5px); /* Move menu item forward on hover */
+}
+.container {
+  margin-right: 100px;
+  margin-top: 110px;
+  margin-bottom: 20px;
+  max-width: 750px;
+  border: 1px solid black; /* Set border style and width */
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ccc;
+}
+  /*animation: animateLeft 1.1s ease-in-out; Updated animation properties 
+
+
+@keyframes animateLeft {
+  0% {
+      transform: translateX(100%);
+  }
+  100% {
+      transform: translateX(0);
+  }
+} */
+
+.container label {
+  font-weight: bold;
+  font-size: 18px; /* Adjust the font size as desired */
+}
+.required {
+  color: red;
+}
+.icon-img {
+  margin-left: 10px;
+  width: 40px; /* Set the width of the icon */
+  height: 40px; /* Set the height of the icon */
+  margin-right: 10px; /* Adjust the spacing between the icon and the text */
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.ID {
+  display: flex;
+  margin-left: 20px;
+}
+.container_title {
+  display: flex;
+  align-items: center; 
+  margin: 5px;
+  margin-bottom: 20px;
+}
+
+input[type="image"] {
+  width: 300px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Add border radius if desired */
+}
+
+.asterisk {
+  color: red;
+}
+
+label {
+  font-weight: bold;
+  max-width: 100px;
+  margin-top: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="email"],
+select {
+  margin-bottom: 10px;
+  max-width: 1300px;
+  width: 85%;
+  padding: 10px; 
+  font-size: 16px;
+  border: none; 
+  border-bottom: 1px solid black; 
+  border-radius: 0; 
+  background-color: transparent; 
+  transition: border-bottom 0.3s; 
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus,
+select:focus {
+  outline: none; /* Remove the outline on focus */
+  border-bottom: 2px solid black /* Change border color on focus */
+}
+
+.secondcolumn label {
+  width: 100px;
+}
+
+.secondcolumn input[type="text"] {
+  width: calc(85% - 100);
+}
+
+#editProfileBtn {
+  position: absolute;
+  bottom: 40px;
+  left: 1070px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#editProfileBtn:hover {
+  background-color: #0056b3;
+}
+
+
+
+.edit-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.edit-container-content {
+  position: fixed;
+  top: 56%;
+  left: 50%;
+  bottom: -330px;
+  transform: translate(-50%, -50%);
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+  max-width: 790px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: calc(100vh - 100px); /* Set max height to fit within viewport */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8); /* Add box shadow */
+  animation: fadeInUp 0.5s ease forwards; /* Apply animation */
+  opacity: 0; /* Initially set opacity to 0 */
+}
+
+/* Define the fadeInUp animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.edit-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.edit-container label {
+  display: block;
+  margin-bottom: 10px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.edit-container input[type="text"],
+.edit-container input[type="email"],
+.edit-container input[type="date"],
+.edit-container select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.edit-container button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px; /* Add margin to separate from previous element */
+}
+
+.edit-container button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+
+.profile2 {
+    background-color: white;
+    margin-left: 20px
+}
+
+.main_ff {
+    display: flex;
+    flex-direction: row;
+    flex: 1fr 1fr;
+} 
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #888; /* Adjust the color as needed */
+}
+
+.close-btn:hover {
+  color: #000; /* Change color on hover */
+}
+

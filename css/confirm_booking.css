@@ -1,0 +1,595 @@
+
+/* Smooth scrolling IF user doesn't have a preference due to motion sensitivities */
+@media screen and (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+:root {
+    --input-border: #8b8a8b;
+    --input-focus-h: 1;
+    --input-focus-s: 3%;
+    --input-focus-l: 16%;
+  }
+/* Global Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #c4b5b5;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+/* Header Styles */
+header {
+    font-style: normal;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+  
+  .logo img {
+    height: 50px;
+    margin-right: 15px;
+  }
+  
+  .title h1 {
+    font-size: 26px;
+    margin: 0;
+    color: #fff;
+    font-size: 20px;
+    justify-content: left;
+    width: 300px;
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+    font-weight: 500; /* Adjust font weight as needed */ 
+  }
+  
+  nav {
+    max-width: 1400px; /* Adjust the max-width value as needed */
+    width: 100%;
+    padding: 1.5rem 1.5rem; /* Increase the padding to add more space */
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+    transition: transform 0.3s ease-in-out; /* Add transition for transform property */
+  }
+  
+  nav:hover {
+    transform: translateZ(5px); /* Move the nav bar forward slightly on hover */
+  }
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-left: auto; /* Align the nav ul content to the right */
+  }
+  nav li {
+    margin-top: 7px;
+  }
+  nav ul li:not(:last-child) {
+    margin-right: 5px; /* Add margin between list items */
+  }
+  nav ul li {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 15px;
+    border-radius: 5px;
+    color: white; /* Base color */
+    padding-bottom: 10px;
+  }
+  nav a{
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 5px;
+    color: white; /* Base color */
+  }
+  
+  nav ul li a:hover {
+    cursor: pointer;
+    color: yellow; /* Bright color on hover */
+    transform: translateZ(5px); /* Move menu item forward on hover */
+  }
+  
+  
+  /* Add this to style the dropdown button */
+  nav .dropdown .dropbtn {
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; 
+    cursor: pointer; /* Change cursor to pointer */
+  }
+  
+  nav .dropdown .dropbtn:hover {
+    color: yellow;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropbtn {
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333; /* Background color of the dropdown */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .dropdown-content a {
+    color: white;
+  
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s;
+  }
+  
+  .dropdown-content a:hover {
+    color: yellow;
+  }
+  
+  .dropdown.active .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content a.logout {
+    color: red; /* Color for logout link */
+  }
+  /* End of Header Styles */
+
+/* Main Content Styles */
+main {
+    margin: 120px auto 40px; /* Adjusted margin-top to include the height of the header */
+    width: 100%; 
+    max-width: 950px; /* Set a maximum width to prevent the content from becoming too wide */
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
+    overflow: auto;
+}
+.passenger-title-container {
+    text-align: center;
+    margin-top: 20px; /* Add top margin to create space between header and passenger title */
+    margin-bottom: 40px; /* Adjust bottom margin as needed */
+    display: flex; /* Add flex display */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+}
+.passenger-details {
+    width: 80%; /* Adjust width as needed */
+    margin-left: 100px; /* Align to the right */
+}
+.logo-passenger-title {
+    margin-left: -50px; /* Add margin to create space between logo and title */
+}
+
+.logo-passenger-title img {
+    height: 70px; /* Adjust the height of the logo */
+    margin-right: -5px;
+
+}
+
+.passenger_title {
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+    font-size: 30px; 
+    color: #333;    
+}
+
+.passenger-info {
+    margin-bottom: 50px;
+    background-color: #f9f9f9; /* Light background color */
+    padding: 60px; /* Added padding for better separation */
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); /* Soft box shadow */
+}
+.passenger-info label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.passenger-info h3 {
+    margin-bottom: 20px;
+    font-size: 25px;
+    text-align: center;
+    
+}
+
+.flight-seats,
+.flight-accommodations {
+    margin-top: 10px;
+}
+
+/* Total Price Section */
+.total-price {
+    text-align: center;
+    font-size: 23px;
+}
+
+.total-price h3 {
+    color: #333;
+    padding-top: 25px;
+    padding-bottom: 40px;
+}
+.ticket-price {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 40px;
+}
+#displayed_overall_price {
+    font-weight: bolder;
+}
+.final_price {
+    font-weight: bold;
+}
+
+/* Payment Methods Section */
+.payment-methods {
+    margin-top: 20px;
+}
+
+.payment-methods h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+    font-size: 23px;
+}
+
+.payment-methods ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.payment-methods ul li {
+    margin-bottom: 10px;
+    margin-left: 50px;
+    font-size: larger;
+}
+
+.payment-methods ul li input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Submit Button */
+.submit-button {
+    text-align: center;
+    margin-top: 30px;
+    
+}
+
+.submit-button button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button button:hover {
+    background-color: #30a119;
+}
+
+/* Popup Styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Add background color with transparency */
+    z-index: 9999;
+    overflow: auto;
+}
+
+
+.popup-content {
+    background-color: #008be7;
+    margin: auto; /* Center the pop-up horizontally */
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 450px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    position: fixed; /* Change position to fixed */
+    top: 50%; /* Move the pop-up to the vertical center */
+    left: 50%; /* Move the pop-up to the horizontal center */
+    transform: translate(-50%, -50%); /* Center the pop-up both horizontally and vertically */
+    color: #f2f2f2;
+    padding-bottom: 15px;
+}
+
+
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close-icon:hover,
+.close-icon:focus {
+    color: #333;
+}
+
+.payment-method {
+    text-align: center;
+    margin-top: 20px; /* Add margin at the top for better spacing */
+}
+
+.payment-logo {
+    width: 300px;
+    margin-bottom: 20px;
+    height: 150px;
+}
+.payment-method h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.payment-method p {
+    margin-bottom: 10px;
+}
+
+.payment-method input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.payment-method button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-method button:hover {
+    background-color: #0056b3;
+}
+/* GCash Pop-up Styles */
+#gcash-popup .popup-content {
+    background-color: #008be7; /* Update background color */
+    color: #fff; /* Update text color */
+    max-width: 400px; /* Adjust maximum width */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#gcash-popup .payment-method {
+    text-align: center;
+}
+
+#gcash-popup .payment-logo {
+    width: 200px; /* Adjust logo size */
+    height: auto; /* Allow height to adjust automatically */
+    margin-bottom: 20px;
+}
+
+#gcash-popup h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#gcash-popup p {
+    margin-bottom: 10px;
+}
+
+#gcash-popup input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#gcash-popup button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Update button color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#gcash-popup button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+/* PayPal Pop-up Styles */
+#paypal-popup .popup-content {
+    background-color: #007bff; /* Update background color */
+    color: #fff; /* Update text color */
+    width: 500px; /* Adjust width to your preference */
+    max-width: 90%; /* Adjust maximum width if needed */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#paypal-popup .payment-method {
+    text-align: center;
+}
+
+#paypal-popup .payment-logo {
+    width: 200px; /* Adjust logo size */
+    height: auto; /* Allow height to adjust automatically */
+    margin-bottom: 20px;
+}
+
+#paypal-popup h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#paypal-popup p {
+    margin-bottom: 10px;
+}
+
+#paypal-popup input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#paypal-popup button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Update button color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#paypal-popup button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+
+/* Mastercard Pop-up Styles */
+#mastercard-popup .popup-content {
+    background-color: #363636; /* Update background color */
+    color: #fff; /* Update text color */
+    max-width: 400px; /* Adjust maximum width */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#mastercard-popup .payment-method {
+    text-align: center;
+}
+
+#mastercard-popup .payment-logo {
+    width: 200px; /* Adjust logo size */
+    height: auto; /* Allow height to adjust automatically */
+    margin-bottom: 20px;
+}
+
+#mastercard-popup h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#mastercard-popup p {
+    margin-bottom: 10px;
+}
+
+#mastercard-popup input[type="text"],
+#mastercard-popup input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#mastercard-popup button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Update button color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#mastercard-popup button:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+/* Input Field Styles */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+select,
+input[type="password"] {
+    width: calc(100% - 20px); /* Adjust input width to fit inside popup content */
+    padding: 15px;
+    margin: 12px 0; /* Increase margin for better separation */
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: medium;
+    font-weight: bold 100px;
+    
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus,
+input[type="password"]:focus {
+    border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+    box-shadow: 0 0 0 2px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.8);
+    transition: 300ms box-shadow ease-in-out;
+    outline: 5px solid transparent;
+}
+
+/* Button Styles */
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1bc567;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #30a119;
+}

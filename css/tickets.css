@@ -1,0 +1,520 @@
+* {
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+}
+body {
+    background-image: url("../assets/images/contact");
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center;
+    background-attachment: fixed; 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative; /* Add position relative */
+  }
+  body:before {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.5); /* Transparent gray color */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place the pseudo-element behind other content */
+  }
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.edit-profile-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-profile-button:hover {
+    background-color: #0056b3;
+}
+
+/* Header Styles */
+header {
+    font-style: normal;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    padding: 10px 20px; /* Added padding */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.title h1 {
+    text-align: left;
+    font-size: 26px;
+    margin: 0;
+    color: #fff;
+    font-size: 20px;
+    justify-content: left;
+    width: 400px;
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+    font-weight: 500; /* Adjust font weight as needed */ 
+}
+
+nav {
+    max-width: 1300px; /* Adjust the max-width value as needed */
+    width: 100%;
+    padding: 1.3rem 2rem; /* Increase the padding to add more space */
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
+    transition: transform 0.3s ease-in-out; /* Add transition for transform property */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-left: auto; /* Align the nav ul content to the right */
+}
+
+nav li {
+    margin-top: 7px;
+}
+
+nav ul li:not(:last-child) {
+    margin-right: 5px; /* Add margin between list items */
+}
+
+nav ul li a {
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 20px;
+    border-radius: 5px;
+    color: white; /* Base color */
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Add transform transition */
+}
+
+nav ul li a:hover {
+    cursor: pointer;
+    color: yellow; /* Bright color on hover */
+    transform: translateZ(5px); /* Move menu item forward on hover */
+}
+
+.ticket-container {
+  width: 388px;
+  height: 675px;
+  position: relative;
+  border-radius: var(--br-41xl);
+  background-color: var(--color-dodgerblue);
+  display: none;
+  max-width: 100%;
+  z-index: 0;
+}
+.input-field2,
+.input-field3{
+  width: 10px;
+}
+.input-field6,
+.input-field7 {
+  width: 110px; /* Adjust the width as needed */
+}
+
+.ticket-container-imgbg-icon {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin: 0 !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: var(--br-41xl);
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.ticket-icon {
+  height: 64px;
+  width: 71px;
+  position: relative;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 2;
+}
+.airline-ticket {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  line-height: 150%;
+  font-weight: 700;
+  font-family: inherit;
+  z-index: 2;
+}
+.airline-ticket-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10px 0 0;
+}
+.input-field {
+  align-self: stretch;
+  height: 33px;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-200);
+  box-sizing: border-box;
+  z-index: 2;
+  font-size: 20px;
+  font-weight: bold;
+}
+.input-field-wrapper,
+.ticket-container1 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.input-field-wrapper {
+  width: 74px;
+  flex-direction: column;
+  padding: var(--padding-base) 0 0;
+  box-sizing: border-box;
+}
+.ticket-container1 {
+  flex-direction: row;
+  gap: 10px;
+  font-size: 30px;
+}
+.name {
+  position: relative;
+  line-height: 26px;
+  display: inline-block;
+  min-width: 54px;
+  z-index: 2;
+}
+.input-field1 {
+  align-self: stretch;
+  height: 19px;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-200);
+  box-sizing: border-box;
+  z-index: 3;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+.date-input-field,
+.name-parent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.date-input-field {
+  flex: 1;
+  flex-direction: column;
+  padding: 4px 0 0;
+}
+.name-parent {
+  align-self: stretch;
+  flex-direction: row;
+}
+.departure-icon {
+  height: 30px;
+  width: 30px;
+  position: relative;
+  object-fit: cover;
+  min-height: 30px;
+  z-index: 2;
+}
+.input-field2 {
+  height: 30px;
+  flex: 1;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-200);
+  box-sizing: border-box;
+  z-index: 2;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+.arrival-input-field {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-lg);
+}
+.arrival-icon {
+  height: 30px;
+  width: 30px;
+  position: relative;
+  object-fit: cover;
+  min-height: 30px;
+  z-index: 2;
+}
+.input-field3 {
+  height: 30px;
+  flex: 1;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-200);
+  box-sizing: border-box;
+  z-index: 2;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+.arrival-input-field1 {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-lg);
+}
+.date-icon {
+  height: 30px;
+  width: 30px;
+  position: relative;
+  object-fit: cover;
+  min-height: 30px;
+  z-index: 2;
+}
+.input-field4 {
+  height: 30px;
+  flex: 1;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-200);
+  box-sizing: border-box;
+  z-index: 2;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+.arrival-input-field2 {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-lg);
+}
+.time-icon {
+  height: 30px;
+  width: 30px;
+  position: relative;
+  object-fit: cover;
+  min-height: 30px;
+  z-index: 2;
+}
+.input-field5 {
+  height: 30px;
+  flex: 1;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-200);
+  box-sizing: border-box;
+  z-index: 2;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+.arrival-input-field3,
+.departure-input-field {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.arrival-input-field3 {
+  align-self: stretch;
+  flex-direction: row;
+  gap: var(--gap-lg);
+}
+.departure-input-field {
+  flex: 1;
+  flex-direction: column;
+  gap: 32px;
+}
+.departure-input-field-wrapper {
+  align-self: stretch;
+  flex-direction: row;
+  padding: 0 19px;
+}
+.departure-input-field-wrapper,
+.frame-parent,
+.frame-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.frame-parent {
+  flex: 1;
+  flex-direction: column;
+  gap: 54px;
+}
+.frame-wrapper {
+  width: 309px;
+  flex-direction: row;
+  padding: 0 var(--padding-3xl) 48px;
+  box-sizing: border-box;
+}
+.class {
+  position: relative;
+  line-height: 26px;
+  display: inline-block;
+  min-width: 52px;
+  z-index: 2;
+}
+.input-field6 {
+  height: 26px;
+  flex: 1;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-200);
+  box-sizing: border-box;
+  z-index: 2;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+.class-parent {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 9px;
+}
+.seat {
+  position: relative;
+  line-height: 26px;
+  display: inline-block;
+  min-width: 43px;
+  z-index: 2;
+}
+.input-field7 {
+  height: 26px;
+  flex: 1;
+  border-radius: var(--br-5xs);
+  background-color: var(--color-gainsboro-100);
+  border: 1px solid var(--color-gainsboro-200);
+  box-sizing: border-box;
+  z-index: 2;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+.frame-group,
+.seat-parent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.seat-parent {
+  align-self: stretch;
+  flex-direction: row;
+  gap: var(--gap-lg);
+}
+.frame-group {
+  flex: 1;
+  flex-direction: column;
+  gap: 11px;
+}
+.frame-container,
+.ticket-container-parent,
+.ticketform {
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+.frame-container {
+  width: 158px;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 0 15px;
+}
+.ticket-container-parent,
+.ticketform {
+  position: relative;
+}
+.ticket-container-parent {
+  border-radius: var(--br-41xl);
+  background-color: var(--color-dodgerblue);
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--padding-base) 12px 34px;
+  gap: 77px;
+  max-width: 100%;
+}
+.ticketform {
+  width: 100%;
+  background-color: var(--color-white);
+  overflow: hidden;
+  flex-direction: row;
+  justify-content: center;
+  padding: 209px var(--padding-xl) 491px 21px;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  font-size: var(--font-size-mid);
+  color: var(--color-white);
+  font-family: var(--font-inter);
+}
+@media screen and (max-width: 750px) {
+  .airline-ticket {
+    font-size: 24px;
+    line-height: 36px;
+  }
+  .ticket-container-parent {
+    padding-top: var(--padding-xl);
+    padding-bottom: var(--padding-3xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .airline-ticket {
+    font-size: 18px;
+    line-height: 27px;
+  }
+  .ticket-container1 {
+    flex-wrap: wrap;
+  }
+  .frame-parent {
+    gap: 27px;
+  }
+  .ticket-container-parent {
+    gap: 38px;
+  }
+}
