@@ -197,7 +197,7 @@
                     <td><?= $main_passenger_data['Status'] ?></td>
                     <td><?= $main_passenger_data['Seat_Number'] ?></td>
                     <td class="btn-td">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>">UPDATE</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>">Update</button>
                     <form id="viewForm" method="POST" style="display: none;" action="userinfo.php">
                     <input type="hidden" id="emailInput" name="email" value="">
                     </form>
@@ -305,7 +305,7 @@
                     <td><?= $row['Status'] ?></td>
                     <td><?= $row['Seat_Number'] ?></td>
                     <td class="btn-td">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OtherseatSelectionModal<?= $other_passengerId ?>">UPDATE</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OtherseatSelectionModal<?= $other_passengerId ?>">Update</button>
                     <form id="viewForm" method="POST" style="display: none;" action="userinfo.php">
                     <input type="hidden" id="emailInput" name="email" value="">
                     </form>

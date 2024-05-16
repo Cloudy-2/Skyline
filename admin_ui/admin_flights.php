@@ -4,47 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title>Flights</title>
+    <title>Skyline - Flights</title>
     <link rel="stylesheet" href="../css/admin_ui_css/flight.css">
     <link rel="icon" href="../assets/images/favicon.jpg">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <style>
+        .table thead th {
+            text-align: center;
+        }
+        .table tbody tr td {
+            text-align: center;
+        }
+    </style>
 </head>
 <body style="background-color: #b9b4b4;">
 <header class="header1">
     <div class="logo">
         <img src="../assets/images/logo.jpg" alt="Airline Logo">
         <div class="title">
-            <h1>Skyline Admin Page</h1>
+            <h1>Skyline Flights</h1>
         </div>
     </div>
     <nav>
         <ul>
-            <li><a href="../admin.php">Analytics</a></li>
+            <li><a href="../admin.php">Dashboard</a></li>
             <li><a href="./admin_contact.php">Contact</a></li>
             <li><a href="./admin_user.php">User</a></li>
             <?php
-               session_start();
-               // Start the session
-              if(isset($_SESSION['username'])) {
-                  if ($_SESSION['username'] === 'Skylineairways@gmail.com') {
-                  // If the user is logged in, display a welcome message which will serve as the dropdown button
-                  echo '<div class="dropdown">';
-                  echo '<button class="dropbtn">Hello, ' . $_SESSION['username'] . '</button>';
-                  echo '<div class="dropdown-content">';
-                  echo '<a href="logout.php" class="logout">Logout</a>';
-                  echo '</div>';
-                  echo '</div>';
-              } else {
-                  // If the user is not an admin, redirect to the index page
-                  header("Location: index.php");
-                  exit(); // Stop script execution
-              }
-          } else {
-              // If the user is not logged in, redirect to the login page
-              header("Location: login.php");
-              exit(); // Stop script execution
-          }    
-            ?> 
+            session_start();
+            // Start the session
+            if(isset($_SESSION['username'])) {
+                if ($_SESSION['username'] === 'Skylineairways@gmail.com') {
+                    // If the user is logged in as admin, display a welcome message which will serve as the dropdown button
+                    echo '<div class="dropdown">';
+                    echo '<button class="dropbtn">Hello, ' . $_SESSION['username'] . '</button>';
+                    echo '<div class="dropdown-content">';
+                    echo '<a href="logout.php" class="logout">Logout</a>';
+                    echo '</div>';
+                    echo '</div>';
+                } else {
+                    // If the user is not an admin, redirect to the index page
+                    header("Location: index.php");
+                    exit(); // Stop script execution
+                }
+            } else {
+                // If the user is not logged in, redirect to the login page
+                header("Location: login.php");
+                exit(); // Stop script execution
+            }
+            ?>
         </ul>  
     </nav>
 </header> 
@@ -53,11 +61,10 @@
         <img class="anal-logo" src="../assets/images/travel.png" alt="">
         <h1 class="h1-anal">FLIGHTS</h1>
     </div>
-    <div class="container">
-        <table class="table table-striped">
+    <div class="table-container">
+        <table class="table">
             <thead>
                 <tr>
-                    <th>Flight ID</th>
                     <th>Flight Number</th>
                     <th>Departure Airport</th>
                     <th>Arrival Airport</th>
@@ -79,12 +86,11 @@
                     // Iterate over each flight record and display it in a table row
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td>" . $row['id'] . "</td>";
-                        echo "<td>" . $row['flight_number'] . "</td>";
+                        echo "<td style='font-weight: bold;' . 'text-align: left;'>" . $row['flight_number'] . "</td>";
                         echo "<td>" . $row['departure_location'] . "</td>";
                         echo "<td>" . $row['arrival_location'] . "</td>";
-                        echo "<td>" . $row['Departure-Time'] . "</td>";
-                        echo "<td>" . $row['Arrival-Time'] . "</td>";
+                        echo "<td style='font-weight: bold;'>" . $row['Departure-Time'] . "</td>";
+                        echo "<td style='font-weight: bold;'>" . $row['Arrival-Time'] . "</td>";
                         echo "</tr>";
                     }
                 } else {

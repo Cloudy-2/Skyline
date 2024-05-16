@@ -1,6 +1,6 @@
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif; /* Use the Montserrat font */
 }
 
 /* Header Styles */
@@ -152,11 +152,15 @@ header {
   }
   /* inbox.css */
 
-
+.inbox-title {
+  font-size: 40px;
+  font-weight: bold;
+}
 .inbox {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
+  width: 80%;
+  margin: 120px auto 0; /* Added margin-top of 20px */
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* Added box shadow */
 }
 
 .email {
@@ -177,14 +181,16 @@ header {
 }
 
 .btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    text-decoration: none;
-    cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 20px; /* Add margin to the top */
 }
+
 
 .btn-primary:hover {
     background-color: #0056b3;

@@ -36,14 +36,13 @@ if ($result_main->num_rows > 0) {
         }
     }
 }
-$sql = "SELECT * FROM tripsum WHERE trip_email= '$email'";
-            $result = $conn->query($sql);
-        
-            if ($result && $result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-            }
-?>
 
+$sql = "SELECT * FROM tripsum WHERE trip_email= '$email'";
+$result = $conn->query($sql);
+if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +54,7 @@ $sql = "SELECT * FROM tripsum WHERE trip_email= '$email'";
     <link rel="icon" href="./assets/images/favicon.jpg">
     <link rel="stylesheet" href="./css/purchase.css">
 </head>
-
+<body>
 <header>
     <div class="logo">
         <img src="./assets/images/logo.jpg" alt="Airline Logo">
@@ -73,12 +72,7 @@ $sql = "SELECT * FROM tripsum WHERE trip_email= '$email'";
     </nav>
 </header>
 
-<body>
-<?php
-if(empty($main_passenger_data)) {
-    echo "<div class='container'><p>No main passenger bookings found</p></div>";
-} else {
-?>
+<?php if (!empty($main_passenger_data)) { ?>
 <div class="container">
     <h3>Main Passenger</h3>
     <table>
@@ -88,24 +82,52 @@ if(empty($main_passenger_data)) {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Status</th>
-            <th>Action</th> <!-- Added Action column -->
+            <th>Action</th>
         </tr>
         <?php
         // Display main passenger data
         foreach ($main_passenger_data as $main_passenger) {
+            $statusClass = "";
+            switch ($main_passenger["Status"]) {
+                case "Pending":
+                    $statusClass = "status-pending";
+                    break;
+                case "Confirmed":
+                    $statusClass = "status-confirmed";
+                    break;
+                case "Declined":
+                    $statusClass = "status-declined";
+                    break;
+            }
             echo "<tr>";
             echo "<td>" . $main_passenger["MainPassenger"] . "</td>";
             echo "<td>" . $main_passenger["Flight_ID"] . "</td>";
             echo "<td>" . $main_passenger["first_name"] . "</td>";
             echo "<td>" . $main_passenger["last_name"] . "</td>";
-            echo "<td>" . $main_passenger["Status"] . "</td>";
-            echo "<td><button class='btn btn-outline-primary view-btn' data-mainpassenger='" . $main_passenger["MainPassenger"] . "'>View Details</button></td>"; // Updated button with data attribute
+            echo "<td><span class='status-circle $statusClass'></span>" . $main_passenger["Status"] . "</td>";
+            echo "<td><button class='btn btn-outline-primary view-btn' data-mainpassenger='" . $main_passenger["MainPassenger"] . "'>View Details</button></td>";
             echo "</tr>";
         }
         ?>
     </table>
 </div>
-
+<?php } else { ?>
+<div class="container">
+    <h3>Main Passenger</h3>
+    <table>
+        <tr>
+            <th>Main Passenger</th>
+            <th>Flight ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td colspan="6">No main passenger bookings found</td>
+        </tr>
+    </table>
+</div>
 <?php } ?>
 
 <div class="container">
@@ -117,19 +139,31 @@ if(empty($main_passenger_data)) {
             <th>First Name</th>
             <th>Last Name</th>
             <th>Status</th>
-            <th>Action</th> <!-- Added Action column -->
+            <th>Action</th>
         </tr>
         <?php
         // Display other passenger data
         if (!empty($other_passenger_data)) {
             foreach ($other_passenger_data as $other_passenger) {
+                $statusClass = "";
+                switch ($other_passenger["Status"]) {
+                    case "Pending":
+                        $statusClass = "status-pending";
+                        break;
+                    case "Confirmed":
+                        $statusClass = "status-confirmed";
+                        break;
+                    case "Declined":
+                        $statusClass = "status-declined";
+                        break;
+                }
                 echo "<tr>";
                 echo "<td>" . $other_passenger["MainPassenger"] . "</td>";
                 echo "<td>" . $other_passenger["Flight_ID"] . "</td>";
                 echo "<td>" . $other_passenger["first_name"] . "</td>";
                 echo "<td>" . $other_passenger["last_name"] . "</td>";
-                echo "<td>" . $other_passenger["Status"] . "</td>";
-                echo "<td><button class='btn btn-outline-primary view-btn' data-mainpassenger='" . $other_passenger["MainPassenger"] . "'>View Details</button></td>"; // Updated button with data attribute
+                echo "<td><span class='status-circle $statusClass'></span>" . $other_passenger["Status"] . "</td>";
+                echo "<td><button class='btn btn-outline-primary view-btn' data-mainpassenger='" . $other_passenger["MainPassenger"] . "'>View Details</button></td>";
                 echo "</tr>";
             }
         } else {
@@ -188,42 +222,42 @@ if(empty($main_passenger_data)) {
                     <div  class="in-footer">
                     <table class="tbl_booking">
                     <tr>
-                <td><strong>Flight Number:</strong></td>
-                <td><?php echo $row["trip_fno"]; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Departure:</strong></td>
-                <td><?php echo $row["trip_dep"]; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Departure Date:</strong></td>
-                <td><?php echo $row["trip_depdate"]; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Departure Time:</strong></td>
-                <td><?php echo $row["trip_deptime"]; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Arrival:</strong></td>
-                <td><?php echo $row["trip_arrival"]; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Arrival Date:</strong></td>
-                <td><?php echo $row["trip_ardate"]; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Arrival Time:</strong></td>
-                <td><?php echo $row["trip_artime"]; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Price:</strong></td>
-                <td><?php echo $row["trip_price"]; ?></td>
-            </tr>
-            <tr>
-                <td><strong>Passenger Email:</strong></td>
-                <td><?php echo $row["trip_email"]; ?></td>
-            </tr>
-        </table>
+                        <td><strong>Flight Number:</strong></td>
+                        <td><?php echo $row["trip_fno"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Departure:</strong></td>
+                        <td><?php echo $row["trip_dep"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Departure Date:</strong></td>
+                        <td><?php echo $row["trip_depdate"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Departure Time:</strong></td>
+                        <td><?php echo $row["trip_deptime"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arrival:</strong></td>
+                        <td><?php echo $row["trip_arrival"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arrival Date:</strong></td>
+                        <td><?php echo $row["trip_ardate"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arrival Time:</strong></td>
+                        <td><?php echo $row["trip_artime"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Price:</strong></td>
+                        <td><?php echo $row["trip_price"]; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Passenger Email:</strong></td>
+                        <td><?php echo $row["trip_email"]; ?></td>
+                    </tr>
+                </table>
                     </div>
             </div>
 
@@ -272,9 +306,6 @@ $(document).ready(function(){
         });
     });
 });
-
 </script>
-
-
 </body>
 </html>

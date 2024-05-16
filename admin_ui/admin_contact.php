@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title>Contact</title>
+    <title>Skyline - Contact</title>
     <link rel="stylesheet" href="../css/admin_ui_css/contact.css">
     <link rel="icon" href="../assets/images/favicon.jpg">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
@@ -14,12 +14,12 @@
     <div class="logo">
         <img src="../assets/images/logo.jpg" alt="Airline Logo">
         <div class="title">
-            <h1>Skyline Admin Page</h1>
+            <h1>Skyline Contact</h1>
         </div>
     </div>
     <nav>
         <ul>
-            <li><a href="../admin.php">Analytics</a></li>
+            <li><a href="../admin.php">Dashboard</a></li>
             <li><a href="./admin_flights.php">Flights</a></li>
             <li><a href="./admin_user.php">User</a></li>
             <?php
@@ -27,22 +27,7 @@
             // Start the session
             if(isset($_SESSION['username'])) {
                 if ($_SESSION['username'] === 'Skylineairways@gmail.com') {
-                    // If the user is logged in as admin, display a welcome message which will serve as the dropdown button
-                    echo '<div class="dropdown">';
-                    echo '<button class="dropbtn">Hello, ' . $_SESSION['username'] . '</button>';
-                    echo '<div class="dropdown-content">';
-                    echo '<a href="logout.php" class="logout">Logout</a>';
-                    echo '</div>';
-                    echo '</div>';
-                } else {
-                    // If the user is not an admin, redirect to the index page
-                    header("Location: index.php");
-                    exit(); // Stop script execution
                 }
-            } else {
-                // If the user is not logged in, redirect to the login page
-                header("Location: login.php");
-                exit(); // Stop script execution
             }
             ?>
         </ul>
@@ -53,15 +38,14 @@
         <img class="anal-logo" src="../assets/images/contact-us.png" alt="">
         <h1 class="h1-anal">CONTACT</h1>
     </div>
-    <div class="container">
-        <table class="table table-striped">
+    <div class="table-container">
+        <table class="table">
             <thead>
             <tr>
-                <th>Contact ID</th>
-                <th>Name</th>
+                <th style='text-align: center;'>Name</th>
                 <th>Email</th>
                 <th>Message</th>
-                <th>Action</th>
+                <th style="text-align: center;">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -70,7 +54,7 @@
             include '../config/database.php';
 
             // Query to fetch contact information
-            $query = "SELECT `contact_id`, `name`, `email`, `message` FROM `admin_contact`";
+            $query = "SELECT `name`, `email`, `message` FROM `admin_contact`";
             $result = mysqli_query($conn, $query);
 
             // Check if there are any contact records
@@ -78,11 +62,10 @@
                 // Iterate over each contact record and display it in a table row
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
-                    echo "<td>" . $row['contact_id'] . "</td>";
-                    echo "<td>" . $row['name'] . "</td>";
+                    echo "<td style='text-align: center;'><b>" . $row['name'] . "</b></td>";
                     echo "<td>" . $row['email'] . "</td>";
                     echo "<td>" . $row['message'] . "</td>";
-                    echo "<td><button class='btn btn-primary reply-btn' data-email='" . $row['email'] . "'>Reply</button></td>";
+                   echo "<td style='text-align: center;'><button class='btn btn-primary reply-btn' data-email='" . $row['email'] . "'>Reply</button></td>";
                     echo "</tr>";
                 }
             } else {

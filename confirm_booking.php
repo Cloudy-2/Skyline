@@ -111,18 +111,18 @@ for ($i = 1; $i <= $passenger_count; $i++) {
     echo '<div class="flight-seats">';
     echo '<label for="seat_' . $i . '">Select Seat:</label>';
     echo '<select id="seat_' . $i . '" name="seat_' . $i . '">';
-    echo '<option value="window">Window Seat</option>';
-    echo '<option value="aisle">Aisle Seat</option>';
-    echo '<option value="middle">Middle Seat</option>';
+    echo '<option value="Window">Window Seat</option>';
+    echo '<option value="Aisle">Aisle Seat</option>';
+    echo '<option value="Middle">Middle Seat</option>';
     echo '</select>';
     echo '</div>';
     // Accommodation Selection for each passenger
     echo '<div class="flight-accommodations">';
     echo '<label for="accommodation_' . $i . '">Select Accommodation:</label>';
     echo '<select id="accommodation_' . $i . '" name="accommodation_' . $i . '" onchange="calculateTotalPrice(' . $i . ')" required>';
-    echo '<option value="economy">Economy Class</option>';
-    echo '<option value="business">Business Class</option>';
-    echo '<option value="first">First Class</option>';
+    echo '<option value="Economy">Economy Class</option>';
+    echo '<option value="Business">Business Class</option>';
+    echo '<option value="First">First Class</option>';
     echo '</select>';
     
     // Indicator for discount

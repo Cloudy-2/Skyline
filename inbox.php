@@ -1,48 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-    <?php 
-    
-   session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
-}
-$user = $_SESSION['username'];
-
-    
-    ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inbox</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .inbox {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .email {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 0;
-        }
-        .sender {
-            font-weight: bold;
-        }
-        .subject {
-            color: #555;
-        }
-        .date {
-            color: #888;
-        }
-    </style>
+    <title>Skyline - Inbox</title>
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="./assets/images/favicon.jpg">
+    <link rel="stylesheet" href="./css/inbox.css">
 </head>
 <body>
+
+<header>
+      <div class="logo">
+          <img src="./assets/images/logo.jpg" alt="Airline Logo">
+          <div class="title">
+              <h1>Skyline Inbox</h1>
+          </div>
+      </div>
+      <nav>
+          <ul>
+              <li><a href="index.php">Dashboard</a></li>
+              <li><a href="profile.php">Profile</a></li>
+          </ul>  
+      </nav>
+  </header> 
+
+
     <div class="inbox">
+        <div class="inbox-title">Inbox</div>
+        <hr>
         <?php
+        session_start();
+        if (!isset($_SESSION['username'])) {
+            header("Location: login.php");
+            exit();
+        }
+        $user = $_SESSION['username'];
+
         // Include the database configuration file
         include 'config/database.php';
 
@@ -57,20 +51,17 @@ $user = $_SESSION['username'];
                 echo "<div class='email'>";
                 echo "<div class='sender'>" . $row['Email'] . "</div>";
                 echo "<div class='subject'>" . $row['Message'] . "</div>";
-                echo "<td><a href='contact.php' class='btn btn-primary reply-btn' data-email='" . $row['Email'] . "'>Reply</a></td>";
-                    echo "</tr>";
-                }
-            } else {
-                // If no contact records found, display a message
-                echo "<tr><td colspan='5'>No Message</td></tr>";
+                echo "<a href='contact.php' class='btn btn-primary reply-btn' data-email='" . $row['Email'] . "'>Reply</a>";
+                echo "</div>"; // Close email container
             }
+        } else {
+            // If no contact records found, display a message
+            echo "<div class='email'>No Message</div>";
+        }
 
-            // Close the database connection
-            mysqli_close($conn);
-            ?>
-            </tbody>
-        </table>
+        // Close the database connection
+        mysqli_close($conn);
+        ?>
     </div>
-</main>
 </body>
 </html>
