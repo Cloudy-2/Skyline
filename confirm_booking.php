@@ -2,7 +2,6 @@
 session_start();
 
 if(isset($_POST['Flight_Number'])) {
-    // Retrieve the Flight Number value from the form
     $flightNumber = $_POST['Flight_Number'];
 }
 
@@ -20,12 +19,10 @@ if (!isset($_POST['passengers'])) {
     exit();
 }
 
-// Retrieve number of passengers from the form
 $passenger_count = $_POST['passengers'];
-$ticket_price = $_POST['price']; // Assuming this is the base ticket price
-$total_price = $ticket_price * $passenger_count; // Initialize total price with base ticket price
+$ticket_price = $_POST['price'];
+$total_price = $ticket_price * $passenger_count;
 
-// Initialize total price with the same value as the base ticket price
 $price = $total_price;
 
 include_once './config/database.php';
@@ -86,7 +83,6 @@ $totalTicketPrice = 0;
 
 // Loop through each passenger
 for ($i = 1; $i <= $passenger_count; $i++) {
-    // Passenger details inputs
     echo '<div class="passenger-info">';
     echo '<h2>Flight - #' . $flightNumber = $_POST['Flight_Number'] . '</h2>';
     echo '<input type="hidden" name="Flight_Number" value="' .  $flightNumber = $_POST['Flight_Number'] . '">';
@@ -127,7 +123,7 @@ for ($i = 1; $i <= $passenger_count; $i++) {
     
     // Indicator for discount
     echo '<span id="discount_indicator_' . $i . '" class="discount-indicator" style="display: none; color: green; font-weight: bold;">(Discount Applied)</span>';
-    echo '</div>'; // End of flight-accommodations
+    echo '</div>';
     
     // Display and calculate ticket price for each passenger
     echo '<div class="ticket-price">Ticket Price: ₱<span id="displayed_ticket_price_' . $i . '" class="displayed_price">' . $ticket_price . '</span></div>';
@@ -135,7 +131,7 @@ for ($i = 1; $i <= $passenger_count; $i++) {
 
     // Add the ticket price for this passenger to the total ticket price
     $totalTicketPrice += $ticket_price;
-    echo '</div>'; // End of passenger-info
+    echo '</div>';
 }
 ?>
 <input type="hidden" name="mainEmail" id="mainEmail" value="<?php echo $user; ?>">
@@ -234,14 +230,14 @@ for ($i = 1; $i <= $passenger_count; $i++) {
     // Function to calculate total price based on accommodation selection for each passenger
     function calculateTotalPrice(passengerIndex) {
         var selectedAccommodation = document.getElementById("accommodation_" + passengerIndex).value;
-        var originalPrice = parseFloat(document.getElementById("mainticket1").value); // Using the base ticket price from the hidden input
+        var originalPrice = parseFloat(document.getElementById("mainticket1").value);
 
         // Calculate ticket price for the selected accommodation
-        var ticketPrice = originalPrice; // Default to base price
+        var ticketPrice = originalPrice;
         if (selectedAccommodation === "business") {
-            ticketPrice *= 1.5; // Business class multiplier
+            ticketPrice *= 1.5;
         } else if (selectedAccommodation === "first") {
-            ticketPrice *= 2; // First class multiplier
+            ticketPrice *= 2;
         }
 
         // Check passenger age for discount
@@ -255,9 +251,9 @@ for ($i = 1; $i <= $passenger_count; $i++) {
         // Apply discount for passengers aged 60 or above
         if (age >= 60) {
             ticketPrice *= 0.9; // 10% discount
-            document.getElementById("discount_indicator_" + passengerIndex).style.display = "inline"; // Show discount indicator
+            document.getElementById("discount_indicator_" + passengerIndex).style.display = "inline";
         } else {
-            document.getElementById("discount_indicator_" + passengerIndex).style.display = "none"; // Hide discount indicator
+            document.getElementById("discount_indicator_" + passengerIndex).style.display = "none";
         }
 
         // Update the displayed ticket price for the passenger
@@ -273,12 +269,12 @@ for ($i = 1; $i <= $passenger_count; $i++) {
     // Function to update the overall price
     function updateOverallPrice() {
         var overallPrice = 0;
-        var passengerCount = <?php echo $passenger_count; ?>; // Retrieve passenger count from PHP
+        var passengerCount = <?php echo $passenger_count; ?>;
         for (var i = 1; i <= passengerCount; i++) {
             overallPrice += parseFloat(document.getElementById("hidden_ticket_price_" + i).value);
         }
         document.getElementById("displayed_overall_price").textContent = overallPrice.toFixed(2);
-        document.getElementById("total_price").value = overallPrice.toFixed(2); // Update hidden input for total price
+        document.getElementById("total_price").value = overallPrice.toFixed(2);
     }
 
     document.addEventListener("DOMContentLoaded", function() {

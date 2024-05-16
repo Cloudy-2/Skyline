@@ -39,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <?php
         if(isset($_SESSION['username'])) {
             // If the user is logged in, display a welcome message which will serve as the dropdown button
-            echo '<li class="dropdown">'; // Add the "dropdown" class to the list item
-            echo '<a class="dropbtn">Hello, ' . $_SESSION['username'] . '</a>'; // Change button to anchor tag
+            echo '<li class="dropdown">';
+            echo '<a class="dropbtn">Hello, ' . $_SESSION['username'] . '</a>';
             echo '<div class="dropdown-content">';
             echo '<a href="#">Profile</a>';
             echo '<a href="logout.php" class="logout">Logout</a>';
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td class='flight-number'>" . $row["flight_number"] . "</td>"; // Add class to this td element
+                echo "<td class='flight-number'>" . $row["flight_number"] . "</td>";
                 echo "<td>" . $row["departure_location"] . "</td>";
                 echo "<td>" . $departureDate . "</td>"; 
                 echo "<td class='flight-number'>" . $row["Departure-Time"] . "</td>";
@@ -140,7 +140,6 @@ const bookNowButtons = document.querySelectorAll('.book-now-button');
 // Add event listeners to each button
 bookNowButtons.forEach(button => {
     button.addEventListener('click', function() {
-        // Your event listener logic goes here
     });
 });
 

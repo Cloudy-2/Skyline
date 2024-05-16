@@ -26,6 +26,7 @@ $destination = isset($_GET['destination']) ? htmlspecialchars($_GET['destination
           <ul>
               <li><a href="flights.php">Flights</a></li>
               <li><a href="offers.php">Offers</a></li>
+              <li><a href="analytics.php">Analytics</a></li>
               <li><a href="contact.php">Contact</a></li> 
               <?php
               session_start(); // Start the session

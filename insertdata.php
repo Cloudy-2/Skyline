@@ -25,7 +25,7 @@ $email_main = $_POST['email_1'];
 $contact_number_main = $_POST['contact_number_1'];
 $dob_main = $_POST['dob_1'];
 $seat_main = $_POST['seat_1'];
-$main_ticket_price = $_POST['hidden_ticket_price_1']; // Retrieve updated ticket price from the form
+$main_ticket_price = $_POST['hidden_ticket_price_1'];
 $accommodation_main = $_POST['accommodation_1'];
 $total_price_main = $_POST["total_price"];
 $status = 'Pending';
@@ -46,7 +46,7 @@ for ($i = 2; $i <= $passenger_count; $i++) {
         $contact_number = $_POST['contact_number_' . $i];
         $dob = $_POST['dob_' . $i];
         $seat = $_POST['seat_' . $i];
-        $ticket_price = $_POST['hidden_ticket_price_' . $i]; // Retrieve updated ticket price from the form
+        $ticket_price = $_POST['hidden_ticket_price_' . $i];
         $accommodation = $_POST['accommodation_' . $i];
         $status = 'Pending';
 
@@ -57,9 +57,9 @@ for ($i = 2; $i <= $passenger_count; $i++) {
         // Execute the statement for other passengers
         if ($stmt_other_passenger->execute() !== TRUE) {
             echo "Error: " . $stmt_other_passenger->error;
-            // Rollback the transaction if an error occurs
+         
             $conn->rollback();
-            exit; // Exit the script if an error occurs
+            exit;
         }
     }
 }

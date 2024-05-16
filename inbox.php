@@ -36,8 +36,6 @@
             exit();
         }
         $user = $_SESSION['username'];
-
-        // Include the database configuration file
         include 'config/database.php';
 
         // Query to fetch emails
@@ -52,14 +50,12 @@
                 echo "<div class='sender'>" . $row['Email'] . "</div>";
                 echo "<div class='subject'>" . $row['Message'] . "</div>";
                 echo "<a href='contact.php' class='btn btn-primary reply-btn' data-email='" . $row['Email'] . "'>Reply</a>";
-                echo "</div>"; // Close email container
+                echo "</div>";
             }
         } else {
             // If no contact records found, display a message
             echo "<div class='email'>No Message</div>";
         }
-
-        // Close the database connection
         mysqli_close($conn);
         ?>
     </div>

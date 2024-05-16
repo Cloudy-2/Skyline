@@ -77,7 +77,7 @@ if ($result && $result->num_rows > 0) {
     <h3>Main Passenger</h3>
     <table>
         <tr>
-            <th>Main Passenger</th>
+            <th>Main Passenger ID</th>
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -85,14 +85,27 @@ if ($result && $result->num_rows > 0) {
             <th>Status</th>
             <th>Action</th>
         </tr>
-        <?php foreach ($main_passenger_data as $main_passenger) { ?>
+        <?php foreach ($main_passenger_data as $main_passenger) { 
+            $statusClass = "";
+            switch ($main_passenger["Status"]) {
+                case "Pending":
+                    $statusClass = "status-pending";
+                    break;
+                case "Confirmed":
+                    $statusClass = "status-confirmed";
+                    break;
+                case "Declined":
+                    $statusClass = "status-declined";
+                    break;
+            }
+            ?>
         <tr>
             <td><?php echo $main_passenger["MainPassenger"]; ?></td>
             <td><?php echo $main_passenger["Flight_ID"]; ?></td>
             <td><?php echo $main_passenger["first_name"]; ?></td>
             <td><?php echo $main_passenger["last_name"]; ?></td>
             <td><?php echo $main_passenger["Seat_Number"]; ?></td>
-            <td><?php echo $main_passenger["Status"]; ?></td>
+            <td><span class="status-circle <?php echo $statusClass; ?>"></span><?php echo $main_passenger["Status"]; ?></td>
             <td><button class="btn btn-outline-primary view-btn" data-mainpassenger="<?php echo $main_passenger["MainPassenger"]; ?>" data-flightid="<?php echo $main_passenger["Flight_ID"]; ?>" data-firstname="<?php echo $main_passenger["first_name"]; ?>" data-lastname="<?php echo $main_passenger["last_name"]; ?>" data-seatnumber="<?php echo $main_passenger["Seat_Number"]; ?>" data-status="<?php echo $main_passenger["Status"]; ?>">View Details</button></td>
         </tr>
         <?php } ?>
@@ -103,7 +116,7 @@ if ($result && $result->num_rows > 0) {
     <h3>Main Passenger</h3>
     <table>
         <tr>
-            <th>Main Passenger</th>
+            <th>Main Passenger ID</th>
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -122,7 +135,7 @@ if ($result && $result->num_rows > 0) {
     <h3>Other Passengers</h3>
     <table>
         <tr>
-            <th>Main Passenger ID</th>
+            <th>Other Passenger ID</th>
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -131,14 +144,27 @@ if ($result && $result->num_rows > 0) {
             <th>Action</th>
         </tr>
         <?php if (!empty($other_passenger_data)) { ?>
-            <?php foreach ($other_passenger_data as $other_passenger) { ?>
+            <?php foreach ($other_passenger_data as $other_passenger) { 
+                 $statusClass = "";
+                 switch ($other_passenger["Status"]) {
+                     case "Pending":
+                         $statusClass = "status-pending";
+                         break;
+                     case "Confirmed":
+                         $statusClass = "status-confirmed";
+                         break;
+                     case "Declined":
+                         $statusClass = "status-declined";
+                         break;
+                 }
+                ?>
             <tr>
                 <td><?php echo $other_passenger["MainPassenger"]; ?></td>
                 <td><?php echo $other_passenger["Flight_ID"]; ?></td>
                 <td><?php echo $other_passenger["first_name"]; ?></td>
                 <td><?php echo $other_passenger["last_name"]; ?></td>
                 <td><?php echo $other_passenger["Seat_Number"]; ?></td>
-                <td><?php echo $other_passenger["Status"]; ?></td>
+                <td><span class="status-circle <?php echo $statusClass; ?>"></span><?php echo $other_passenger["Status"]; ?></td>
                 <td><button class="btn btn-outline-primary view-btn" data-mainpassenger="<?php echo $other_passenger["MainPassenger"]; ?>" data-flightid="<?php echo $other_passenger["Flight_ID"]; ?>" data-firstname="<?php echo $other_passenger["first_name"]; ?>" data-lastname="<?php echo $other_passenger["last_name"]; ?>" data-seatnumber="<?php echo $other_passenger["Seat_Number"]; ?>" data-status="<?php echo $other_passenger["Status"]; ?>">View Details</button></td>
             </tr>
             <?php } ?>
@@ -159,7 +185,7 @@ if ($result && $result->num_rows > 0) {
                 <div class="boarding-pass">
                     <div class="header">
                         <div class="logo">
-                            <img src="/assets/images/logo.jpg" alt="Airplane Logo">
+                            <img src="./assets/images/logo.jpg" alt="Airplane Logo">
                         </div>
                         <div class="airline-name">
                             <h1>SKYLINE AIRWAYS</h1>
@@ -193,7 +219,7 @@ if ($result && $result->num_rows > 0) {
                         <h2><?php echo $row["trip_deptime"]; ?> - <?php echo $row["trip_depdate"]; ?></h2>
                     </div>
                     <div class="barcode">
-                        <img src="/assets/images/barcode.gif" alt="Barcode">
+                        <img src="./assets/images/barcode.gif" alt="Barcode">
                     </div>
                     <div class="footer">
                         <div class="section">
@@ -222,7 +248,7 @@ if ($result && $result->num_rows > 0) {
 crossorigin="anonymous"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
-$(document).ready(function(){
+    $(document).ready(function(){
     $('.view-btn').click(function(){
         var mainPassenger = $(this).data('mainpassenger');
         var flightID = $(this).data('flightid');
@@ -240,6 +266,14 @@ $(document).ready(function(){
         $('#status').text(status);
 
         $('#view-details').modal('show');
+    });
+
+    // Disable view button for bookings with status "Pending" or "Declined"
+    $('.view-btn').each(function() {
+        var status = $(this).data('status');
+        if (status === "Pending" || status === "Declined") {
+            $(this).prop('disabled', true);
+        }
     });
 
     // Download Ticket button click event

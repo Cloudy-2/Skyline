@@ -1,12 +1,10 @@
 <?php   
-session_start(); // Start the session
-
+session_start();
 include './config/database.php';
 
 $email = ""; // Initialize the $email variable
 
 if(isset($_SESSION['username'])) {
-    // Retrieve email of logged-in user from session
     $email = $_SESSION['username'];
 
     $sql = "SELECT * FROM `logindata` WHERE reg_email = '$email'";
@@ -15,14 +13,12 @@ if(isset($_SESSION['username'])) {
     if ($result->num_rows > 0) {
       // Output data of each row
       $row = $result->fetch_assoc();
-
-      // Retrieve the image data (longblob) from the row
       $image_blob = $row['reg_idUpload'];
     }
 } else {
     // Redirect to the login page if user is not logged in
     header("Location: login.php");
-    exit(); // Ensure that script execution stops after redirection
+    exit();
 }
   // Function to retrieve region description
   function getRegionDesc($regionCode) {
