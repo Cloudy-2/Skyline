@@ -122,7 +122,7 @@ for ($i = 1; $i <= $passenger_count; $i++) {
     echo '<select id="accommodation_' . $i . '" name="accommodation_' . $i . '" onchange="calculateTotalPrice(' . $i . ')" required>';
     echo '<option value="Economy">Economy Class</option>';
     echo '<option value="Business">Business Class</option>';
-    echo '<option value="First">First Class</option>';
+    echo '<option value="First Class">First Class</option>';
     echo '</select>';
     
     // Indicator for discount

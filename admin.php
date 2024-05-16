@@ -240,9 +240,9 @@
                     <!-- Hidden input field to pass the Main Passenger ID -->
                     <input type="hidden" name="SeatSelected" value="<?php $seatNumber ?>">
                     <input type="hidden" name="main_passenger_id" value="<?= $main_passenger_data['MainPassenger'] ?>">
-                    <button type="submit" class="btn btn-outline-success" name="main_confirm-btn">Confirm</button>
+
+                </div>                    <button type="submit" class="btn btn-outline-success" name="main_confirm-btn">Confirm</button>
                     <button type="submit" class="btn btn-outline-danger" name="main_decline-btn">Decline</button>
-                </div>
             </div>
         </div>
     </div>
@@ -362,7 +362,7 @@
     </div>
     <div class="card-footer">
         <p >
-            <center style="font-size: 20px; font-weight:bold; ">Skyline Airways &reg;</center>
+            <center style="font-size: 20px; font-weight:bold; ">&copy; 2024 Skyline Airways PH. All rights reserved.</center>
         </p>
     </div>
     <?php
