@@ -1,5 +1,4 @@
 <?php
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle file upload
     $file_temp = $_FILES['id_upload']['tmp_name'];
@@ -16,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $first_name = $_POST["first_name"];
         $last_name = $_POST["last_name"];
         $email = $_POST["email"];
-        $password = $_POST["password"]; // Remember to hash the password
+        $password = $_POST["password"];
         $confirm_password = $_POST["confirm_password"];
         $region = $_POST["inp_region"];
         $province = $_POST["inp_province"];
@@ -31,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response['success'] = false;
             $response['message'] = "Passwords do not match.";
             echo json_encode($response);
+            $conn->close(); // Close connection before exit
             exit();
         }
 
@@ -44,6 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response['success'] = false;
             $response['message'] = "Email already exists.";
             echo json_encode($response);
+            $stmt_check_email->close(); // Close statement before exit
+            $conn->close(); // Close connection before exit
             exit();
         }
 
@@ -75,23 +77,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response['success'] = true;
             $response['message'] = "Registration successful!";
             echo json_encode($response);
-            exit();
         } else {
             // Insert failed
             $response['success'] = false;
             $response['message'] = "Error occurred while registering. Please try again later.";
             echo json_encode($response);
-            exit();
         }
 
         // Close statement
         $stmt->close();
+        $stmt_check_email->close();
     } else {
         // File upload failed
         $response['success'] = false;
         $response['message'] = "Error uploading file";
         echo json_encode($response);
-        exit();
     }
 
     // Close database connection
