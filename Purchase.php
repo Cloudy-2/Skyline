@@ -77,7 +77,7 @@ if ($result && $result->num_rows > 0) {
     <h3>Main Passenger</h3>
     <table>
         <tr>
-            <th>Main Passenger</th>
+            <th>Main Passenger ID</th>
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -85,14 +85,27 @@ if ($result && $result->num_rows > 0) {
             <th>Status</th>
             <th>Action</th>
         </tr>
-        <?php foreach ($main_passenger_data as $main_passenger) { ?>
+        <?php foreach ($main_passenger_data as $main_passenger) { 
+            $statusClass = "";
+            switch ($main_passenger["Status"]) {
+                case "Pending":
+                    $statusClass = "status-pending";
+                    break;
+                case "Confirmed":
+                    $statusClass = "status-confirmed";
+                    break;
+                case "Declined":
+                    $statusClass = "status-declined";
+                    break;
+            }
+            ?>
         <tr>
             <td><?php echo $main_passenger["MainPassenger"]; ?></td>
             <td><?php echo $main_passenger["Flight_ID"]; ?></td>
             <td><?php echo $main_passenger["first_name"]; ?></td>
             <td><?php echo $main_passenger["last_name"]; ?></td>
             <td><?php echo $main_passenger["Seat_Number"]; ?></td>
-            <td><?php echo $main_passenger["Status"]; ?></td>
+            <td><span class="status-circle <?php echo $statusClass; ?>"></span><?php echo $main_passenger["Status"]; ?></td>
             <td><button class="btn btn-outline-primary view-btn" data-mainpassenger="<?php echo $main_passenger["MainPassenger"]; ?>" data-flightid="<?php echo $main_passenger["Flight_ID"]; ?>" data-firstname="<?php echo $main_passenger["first_name"]; ?>" data-lastname="<?php echo $main_passenger["last_name"]; ?>" data-seatnumber="<?php echo $main_passenger["Seat_Number"]; ?>" data-status="<?php echo $main_passenger["Status"]; ?>">View Details</button></td>
         </tr>
         <?php } ?>
@@ -103,7 +116,7 @@ if ($result && $result->num_rows > 0) {
     <h3>Main Passenger</h3>
     <table>
         <tr>
-            <th>Main Passenger</th>
+            <th>Main Passenger ID</th>
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -122,7 +135,7 @@ if ($result && $result->num_rows > 0) {
     <h3>Other Passengers</h3>
     <table>
         <tr>
-            <th>Main Passenger ID</th>
+            <th>Other Passenger ID</th>
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -131,14 +144,27 @@ if ($result && $result->num_rows > 0) {
             <th>Action</th>
         </tr>
         <?php if (!empty($other_passenger_data)) { ?>
-            <?php foreach ($other_passenger_data as $other_passenger) { ?>
+            <?php foreach ($other_passenger_data as $other_passenger) { 
+                 $statusClass = "";
+                 switch ($other_passenger["Status"]) {
+                     case "Pending":
+                         $statusClass = "status-pending";
+                         break;
+                     case "Confirmed":
+                         $statusClass = "status-confirmed";
+                         break;
+                     case "Declined":
+                         $statusClass = "status-declined";
+                         break;
+                 }
+                ?>
             <tr>
                 <td><?php echo $other_passenger["MainPassenger"]; ?></td>
                 <td><?php echo $other_passenger["Flight_ID"]; ?></td>
                 <td><?php echo $other_passenger["first_name"]; ?></td>
                 <td><?php echo $other_passenger["last_name"]; ?></td>
                 <td><?php echo $other_passenger["Seat_Number"]; ?></td>
-                <td><?php echo $other_passenger["Status"]; ?></td>
+                <td><span class="status-circle <?php echo $statusClass; ?>"></span><?php echo $other_passenger["Status"]; ?></td>
                 <td><button class="btn btn-outline-primary view-btn" data-mainpassenger="<?php echo $other_passenger["MainPassenger"]; ?>" data-flightid="<?php echo $other_passenger["Flight_ID"]; ?>" data-firstname="<?php echo $other_passenger["first_name"]; ?>" data-lastname="<?php echo $other_passenger["last_name"]; ?>" data-seatnumber="<?php echo $other_passenger["Seat_Number"]; ?>" data-status="<?php echo $other_passenger["Status"]; ?>">View Details</button></td>
             </tr>
             <?php } ?>
