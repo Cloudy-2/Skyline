@@ -9,7 +9,7 @@ if(isset($_SESSION['username'])) {
     $email = $_SESSION['username'];
 
     // Check if the logged-in user has any booking history or ongoing booking as a main passenger
-    $sql_main = "SELECT `Flight_ID`, `MainPassenger`, `first_name`, `last_name`, `email`, `contact_number`, `dob`, `seat`, `accommodation`, `ticket_price`, `total_price`, `Status` FROM `main_passengers` WHERE email = '$email'";
+    $sql_main = "SELECT `Flight_ID`, `MainPassenger`, `first_name`, `last_name`, `email`, `contact_number`, `dob`, `seat`, `accommodation`, `ticket_price`, `total_price`, `Seat_Number`, `Status` FROM `main_passengers` WHERE email = '$email'";
     $result_main = $conn->query($sql_main);
 }
 
@@ -27,7 +27,7 @@ if ($result_main->num_rows > 0) {
         $mainPassengerID = $main_passenger['MainPassenger'];
 
         // Execute the query to retrieve other passenger data based on the MainPassengerID
-        $sql_other = "SELECT `Flight_ID`, `id`, `MainPassenger`, `first_name`, `last_name`, `email`, `contact_number`, `dob`, `seat`, `accommodation`, `ticket_price`, `Status` FROM `other_passengers` WHERE MainPassenger = '$mainPassengerID'";
+        $sql_other = "SELECT `Flight_ID`, `id`, `MainPassenger`, `first_name`, `last_name`, `email`, `contact_number`, `dob`, `seat`, `accommodation`, `ticket_price`, `Seat_Number`, `Status`  FROM `other_passengers` WHERE MainPassenger = '$mainPassengerID'";
         $result_other = $conn->query($sql_other);
 
         // Fetch and store the other passenger data in the array
@@ -81,34 +81,21 @@ if ($result && $result->num_rows > 0) {
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Seat Number</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
-        <?php
-        // Display main passenger data
-        foreach ($main_passenger_data as $main_passenger) {
-            $statusClass = "";
-            switch ($main_passenger["Status"]) {
-                case "Pending":
-                    $statusClass = "status-pending";
-                    break;
-                case "Confirmed":
-                    $statusClass = "status-confirmed";
-                    break;
-                case "Declined":
-                    $statusClass = "status-declined";
-                    break;
-            }
-            echo "<tr>";
-            echo "<td>" . $main_passenger["MainPassenger"] . "</td>";
-            echo "<td>" . $main_passenger["Flight_ID"] . "</td>";
-            echo "<td>" . $main_passenger["first_name"] . "</td>";
-            echo "<td>" . $main_passenger["last_name"] . "</td>";
-            echo "<td><span class='status-circle $statusClass'></span>" . $main_passenger["Status"] . "</td>";
-            echo "<td><button class='btn btn-outline-primary view-btn' data-mainpassenger='" . $main_passenger["MainPassenger"] . "'>View Details</button></td>";
-            echo "</tr>";
-        }
-        ?>
+        <?php foreach ($main_passenger_data as $main_passenger) { ?>
+        <tr>
+            <td><?php echo $main_passenger["MainPassenger"]; ?></td>
+            <td><?php echo $main_passenger["Flight_ID"]; ?></td>
+            <td><?php echo $main_passenger["first_name"]; ?></td>
+            <td><?php echo $main_passenger["last_name"]; ?></td>
+            <td><?php echo $main_passenger["Seat_Number"]; ?></td>
+            <td><?php echo $main_passenger["Status"]; ?></td>
+            <td><button class="btn btn-outline-primary view-btn" data-mainpassenger="<?php echo $main_passenger["MainPassenger"]; ?>" data-flightid="<?php echo $main_passenger["Flight_ID"]; ?>" data-firstname="<?php echo $main_passenger["first_name"]; ?>" data-lastname="<?php echo $main_passenger["last_name"]; ?>" data-seatnumber="<?php echo $main_passenger["Seat_Number"]; ?>" data-status="<?php echo $main_passenger["Status"]; ?>">View Details</button></td>
+        </tr>
+        <?php } ?>
     </table>
 </div>
 <?php } else { ?>
@@ -120,11 +107,12 @@ if ($result && $result->num_rows > 0) {
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Seat Number</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
         <tr>
-            <td colspan="6">No main passenger bookings found</td>
+            <td colspan="7">No main passenger bookings found</td>
         </tr>
     </table>
 </div>
@@ -138,138 +126,96 @@ if ($result && $result->num_rows > 0) {
             <th>Flight ID</th>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Seat Number</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
-        <?php
-        // Display other passenger data
-        if (!empty($other_passenger_data)) {
-            foreach ($other_passenger_data as $other_passenger) {
-                $statusClass = "";
-                switch ($other_passenger["Status"]) {
-                    case "Pending":
-                        $statusClass = "status-pending";
-                        break;
-                    case "Confirmed":
-                        $statusClass = "status-confirmed";
-                        break;
-                    case "Declined":
-                        $statusClass = "status-declined";
-                        break;
-                }
-                echo "<tr>";
-                echo "<td>" . $other_passenger["MainPassenger"] . "</td>";
-                echo "<td>" . $other_passenger["Flight_ID"] . "</td>";
-                echo "<td>" . $other_passenger["first_name"] . "</td>";
-                echo "<td>" . $other_passenger["last_name"] . "</td>";
-                echo "<td><span class='status-circle $statusClass'></span>" . $other_passenger["Status"] . "</td>";
-                echo "<td><button class='btn btn-outline-primary view-btn' data-mainpassenger='" . $other_passenger["MainPassenger"] . "'>View Details</button></td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='6'>No other passenger bookings found</td></tr>";
-        }
-        ?>
+        <?php if (!empty($other_passenger_data)) { ?>
+            <?php foreach ($other_passenger_data as $other_passenger) { ?>
+            <tr>
+                <td><?php echo $other_passenger["MainPassenger"]; ?></td>
+                <td><?php echo $other_passenger["Flight_ID"]; ?></td>
+                <td><?php echo $other_passenger["first_name"]; ?></td>
+                <td><?php echo $other_passenger["last_name"]; ?></td>
+                <td><?php echo $other_passenger["Seat_Number"]; ?></td>
+                <td><?php echo $other_passenger["Status"]; ?></td>
+                <td><button class="btn btn-outline-primary view-btn" data-mainpassenger="<?php echo $other_passenger["MainPassenger"]; ?>" data-flightid="<?php echo $other_passenger["Flight_ID"]; ?>" data-firstname="<?php echo $other_passenger["first_name"]; ?>" data-lastname="<?php echo $other_passenger["last_name"]; ?>" data-seatnumber="<?php echo $other_passenger["Seat_Number"]; ?>" data-status="<?php echo $other_passenger["Status"]; ?>">View Details</button></td>
+            </tr>
+            <?php } ?>
+        <?php } else { ?>
+            <tr><td colspan="7">No other passenger bookings found</td></tr>
+        <?php } ?>
     </table>
 </div>
 
 <div class="modal fade" id="view-details">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Booking Details</h4>
+                <h4 class="modal-title">Ticket Details</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <!-- Modal body -->
-            <div class="modal-body" id="modal-body" style="display: flex; flex-direction: column;">
-                
-                    <div class="in-header">
-                        <img class="logo-pp" src="./assets/images/ellipse-1@2x.png" alt="">
-                        <h5 class="h1-pp">SKYLINE AIRWAYS&reg;</h5>
-                        <div class="row hed1">
-                            <div  class="col-md-12">
-                                <p style="background-color: #f2f2f2; border-radius: 10px;" ><strong>Flight ID:</strong> <span id="flightID"></span></p>
-                            </div>
+            <div class="modal-body" id="modal-body">
+                <div class="boarding-pass">
+                    <div class="header">
+                        <div class="logo">
+                            <img src="/assets/images/logo.jpg" alt="Airplane Logo">
+                        </div>
+                        <div class="airline-name">
+                            <h1>SKYLINE AIRWAYS</h1>
+                            <p>To Travel Safe Is Our Deal!</p>
+                        </div>
+                        <div class="boarding-pass-label">
+                            <p>STATUS</p>
+                            <h1><span id="status"></span></h1>
                         </div>
                     </div>
-
-                <hr style="background-color: white; height: 3px;">
-                    <div class="in-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p><strong>Main Passenger:</strong> <span id="mainPassenger"></span></p>
-                            </div>
+                    <div class="passenger-info">
+                        <div class="section">
+                            <p>PASSENGER NAME</p>
+                            <h2><span id="lastName"></span>, <span id="firstName"></span></h2>
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p><strong>First Name:</strong> <span id="firstName"></span></p>
-                            </div>
+                        <div class="section">
+                            <p>FLIGHT NO.</p>
+                            <h2><span id="flightID"></span></h2>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p><strong>Last Name:</strong> <span id="lastName"></span></p>
-                            </div>
+                        <div class="section">
+                            <p>SEAT</p>
+                            <h2><span id="seatNumber"></span></h2>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p><strong>Status:</strong> <span id="status"></span></p>
-                            </div>
+                        <div class="section">
+                            <p>EMAIL</p>
+                            <h2><?php echo $row["trip_email"]; ?></h2>
                         </div>
                     </div>
-                <hr style="background-color: white; height: 3px;">
-                    <div  class="in-footer">
-                    <table class="tbl_booking">
-                    <tr>
-                        <td><strong>Flight Number:</strong></td>
-                        <td><?php echo $row["trip_fno"]; ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Departure:</strong></td>
-                        <td><?php echo $row["trip_dep"]; ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Departure Date:</strong></td>
-                        <td><?php echo $row["trip_depdate"]; ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Departure Time:</strong></td>
-                        <td><?php echo $row["trip_deptime"]; ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Arrival:</strong></td>
-                        <td><?php echo $row["trip_arrival"]; ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Arrival Date:</strong></td>
-                        <td><?php echo $row["trip_ardate"]; ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Arrival Time:</strong></td>
-                        <td><?php echo $row["trip_artime"]; ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Price:</strong></td>
-                        <td><?php echo $row["trip_price"]; ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Passenger Email:</strong></td>
-                        <td><?php echo $row["trip_email"]; ?></td>
-                    </tr>
-                </table>
+                    <div class="boarding-time">
+                        <p>BOARDING TIME</p>
+                        <h2><?php echo $row["trip_deptime"]; ?> - <?php echo $row["trip_depdate"]; ?></h2>
                     </div>
+                    <div class="barcode">
+                        <img src="/assets/images/barcode.gif" alt="Barcode">
+                    </div>
+                    <div class="footer">
+                        <div class="section">
+                            <p>FROM</p>
+                            <h2><?php echo $row["trip_dep"]; ?></h2>
+                        </div>
+                        <div class="section">
+                            <p>TO</p>
+                            <h2><?php echo $row["trip_arrival"]; ?></h2>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
-            <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button class='btn btn-success download-btn'>Download as Ticket</button>
+                <button class="btn btn-success download-btn">Download as Ticket</button>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -279,16 +225,18 @@ crossorigin="anonymous"></script>
 $(document).ready(function(){
     $('.view-btn').click(function(){
         var mainPassenger = $(this).data('mainpassenger');
-        var flightID = $(this).closest('tr').find('td:eq(1)').text();
-        var firstName = $(this).closest('tr').find('td:eq(2)').text();
-        var lastName = $(this).closest('tr').find('td:eq(3)').text();
-        var status = $(this).closest('tr').find('td:eq(4)').text();
+        var flightID = $(this).data('flightid');
+        var firstName = $(this).data('firstname');
+        var lastName = $(this).data('lastname');
+        var seatNumber = $(this).data('seatnumber');
+        var status = $(this).data('status');
 
         // Populate modal with data
         $('#mainPassenger').text(mainPassenger);
         $('#flightID').text(flightID);
         $('#firstName').text(firstName);
         $('#lastName').text(lastName);
+        $('#seatNumber').text(seatNumber);
         $('#status').text(status);
 
         $('#view-details').modal('show');
@@ -306,6 +254,7 @@ $(document).ready(function(){
         });
     });
 });
+
 </script>
 </body>
 </html>
