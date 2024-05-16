@@ -220,7 +220,7 @@
                     <!-- Dropdown select for seat number -->
                     <div class="mb-3">
                     <label for="SeatSelect" class="form-label">Select Seat Number</label>
-<select class="form-select" id="SeatSelect" name="SeatSelect">
+<select class="form-select" id="SeatSelect" name="SeatSelect" required>
     <!-- Add your seat numbers here -->
     <option value='' disabled selected>Select Seat</option>
     <?php 
