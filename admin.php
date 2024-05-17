@@ -154,6 +154,19 @@
     $stmt_get_main_passenger->execute();
     $result_main_passenger = $stmt_get_main_passenger->get_result();
 
+    // Collect all taken seats per flight in an array
+    $takenSeatsPerFlight = [];
+    while ($row = $result_main_passenger->fetch_assoc()) {
+        $flightID = $row['Flight_ID'];
+        $seatNumber = $row['Seat_Number'];
+        if (!isset($takenSeatsPerFlight[$flightID])) {
+            $takenSeatsPerFlight[$flightID] = [];
+        }
+        $takenSeatsPerFlight[$flightID][] = $seatNumber;
+    }
+
+    // Reset the result set pointer
+    $result_main_passenger->data_seek(0);
     ?>
     
     <?php
@@ -164,98 +177,98 @@
     <?php
     } else {
     ?>
-    <div class="card-header mt-4"><h2 class="mainpass">Main Passenger Data</h2></div>
-    <div class="card-body">
-        <table class="table table-bordered table-hover custom-table">
-            <tr>
-                <th>Main Passenger ID</th>
-                <th>Flight Number</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Seat</th>
-                <th>Accommodation</th>
-                <th>Total Price</th>
-                <th>Status</th>
-                <th>Seat#</th>
-                <th>Action</th>
-            </tr>
-            <?php
-            while ($main_passenger_data = $result_main_passenger->fetch_assoc()) {
-            ?>
+        <div class="card-header mt-4"><h2 class="mainpass">Main Passenger Data</h2></div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover custom-table">
                 <tr>
-                    <td><?= $main_passenger_data['MainPassenger'] ?></td>
-                    <td><?= $main_passenger_data['Flight_ID'] ?></td>
-                    <td><?= $main_passenger_data['first_name'] ?></td>
-                    <td><?= $main_passenger_data['last_name'] ?></td>
-                    <td><?= $main_passenger_data['email'] ?></td>
-                    <td><?= $main_passenger_data['contact_number'] ?></td>
-                    <td><?= $main_passenger_data['seat'] ?></td>
-                    <td><?= $main_passenger_data['accommodation'] ?></td>
-                    <td>₱ <?= $main_passenger_data['total_price'] ?></td>
-                    <td><?= $main_passenger_data['Status'] ?></td>
-                    <td><?= $main_passenger_data['Seat_Number'] ?></td>
-                    <td class="btn-td">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>">Update</button>
-                    <form id="viewForm" method="POST" style="display: none;" action="userinfo.php">
-                    <input type="hidden" id="emailInput" name="email" value="">
-                    </form>
-                    <button class="btn btn-outline-primary view-btn" onclick="submitEmailForm(this)" data-main-passenger="<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>">View</button>
-
-                    <form method="post" action="UpdateBooking.php">
-                    <div class="modal fade" id="seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>" tabindex="-1" aria-labelledby="seatSelectionModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="seatSelectionModalLabel">Select Your Seat</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Airplane seat map -->
-                    <div class="seat-map mb-3">
-                        <!-- Add your seat map image or seat layout here -->
-                        <img src="./assets/images/seatmap.png" alt="Airplane Seat Map" class="img-fluid" style="width:100%">
-                    </div>
-                    <!-- Dropdown select for seat number -->
-                    <div class="mb-3">
-                    <label for="SeatSelect" class="form-label">Select Seat Number</label>
-<select class="form-select" id="SeatSelect" name="SeatSelect" required>
-    <!-- Add your seat numbers here -->
-    <option value='' disabled selected>Select Seat</option>
-    <?php 
-    $sections = ['A', 'B', 'C', 'D'];
-    foreach ($sections as $section) {
-        for ($i = 1; $i <= 15; $i++) {
-            $seatNumber = $section . $i ;
-            echo "<option value='$seatNumber'>$seatNumber</option>";
-        }
-    }
-    ?>
-</select>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <!-- Hidden input field to pass the Main Passenger ID -->
-                    <input type="hidden" name="SeatSelected" value="<?php $seatNumber ?>">
-                    <input type="hidden" name="main_passenger_id" value="<?= $main_passenger_data['MainPassenger'] ?>">
-
-                </div>                    <button type="submit" class="btn btn-outline-success" name="main_confirm-btn">Confirm</button>
-                    <button type="submit" class="btn btn-outline-danger" name="main_decline-btn">Decline</button>
-            </div>
-        </div>
-    </div>
-</form>
-
-                    </td>
+                    <th>Main Passenger ID</th>
+                    <th>Flight Number</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                    <th>Seat</th>
+                    <th>Accommodation</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Seat#</th>
+                    <th>Action</th>
                 </tr>
-            <?php
-            }
-            ?>
-        </table>
-    </div>
-    <?php
+                <?php
+                while ($main_passenger_data = $result_main_passenger->fetch_assoc()) {
+                    $flightID = $main_passenger_data['Flight_ID'];
+                    $takenSeats = isset($takenSeatsPerFlight[$flightID]) ? $takenSeatsPerFlight[$flightID] : [];
+                ?>
+                    <tr>
+                        <td><?= $main_passenger_data['MainPassenger'] ?></td>
+                        <td><?= $main_passenger_data['Flight_ID'] ?></td>
+                        <td><?= $main_passenger_data['first_name'] ?></td>
+                        <td><?= $main_passenger_data['last_name'] ?></td>
+                        <td><?= $main_passenger_data['email'] ?></td>
+                        <td><?= $main_passenger_data['contact_number'] ?></td>
+                        <td><?= $main_passenger_data['seat'] ?></td>
+                        <td><?= $main_passenger_data['accommodation'] ?></td>
+                        <td>₱ <?= $main_passenger_data['total_price'] ?></td>
+                        <td><?= $main_passenger_data['Status'] ?></td>
+                        <td><?= $main_passenger_data['Seat_Number'] ?></td>
+                        <td class="btn-td">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>">UPDATE</button>
+                            <form id="viewForm" method="POST" style="display: none;" action="userinfo.php">
+                                <input type="hidden" id="emailInput" name="email" value="">
+                            </form>
+                            <button class="btn btn-outline-primary view-btn" onclick="submitEmailForm(this)" data-main-passenger="<?= htmlspecialchars(json_encode($main_passenger_data), ENT_QUOTES, 'UTF-8') ?>">View</button>
+
+                            <form method="post" action="UpdateBooking.php">
+                                <div class="modal fade" id="seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>" tabindex="-1" aria-labelledby="seatSelectionModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="seatSelectionModalLabel">Select Your Seat</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="seat-map mb-3">
+                                                    <img src="./assets/images/seatmap.png" alt="Airplane Seat Map" class="img-fluid" style="width:100%">
+                                                </div>
+                                                <!-- Dropdown select for seat number -->
+                                                <div class="mb-3">
+                                                    <label for="SeatSelect<?= $main_passenger_data['MainPassenger'] ?>" class="form-label">Select Seat Number</label>
+                                                    <select class="form-select" id="SeatSelect<?= $main_passenger_data['MainPassenger'] ?>" name="SeatSelect">
+                                                        <option value='' disabled selected>Select Seat</option>
+                                                        <?php 
+                                                        $sections = ['A', 'B', 'C', 'D'];
+                                                        foreach ($sections as $section) {
+                                                            for ($i = 1; $i <= 15; $i++) {
+                                                                $seatNumber = $section . $i;
+                                                                if (in_array($seatNumber, $takenSeats)) {
+                                                                    echo "<option value='$seatNumber' disabled style='background-color: red;'>$seatNumber</option>";
+                                                                } else {
+                                                                    echo "<option value='$seatNumber'>$seatNumber</option>";
+                                                                }
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="hidden" name="main_passenger_id" value="<?= $main_passenger_data['MainPassenger'] ?>">
+                                                <button type="submit" class="btn btn-outline-success" name="main_confirm-btn">Confirm</button>
+                                                <button type="submit" class="btn btn-outline-danger" name="main_decline-btn">Decline</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </table>
+        </div>
+            
+        <?php
     }
 
     // Retrieve and display other passengers' data
@@ -263,6 +276,18 @@
     $stmt_get_other_passengers->execute();
     $result_other_passengers = $stmt_get_other_passengers->get_result();
 
+    // Collect all taken seats by other passengers in the same array
+    while ($row = $result_other_passengers->fetch_assoc()) {
+        $flightID = $row['Flight_ID'];
+        $seatNumber = $row['Seat_Number'];
+        if (!isset($takenSeatsPerFlight[$flightID])) {
+            $takenSeatsPerFlight[$flightID] = [];
+        }
+        $takenSeatsPerFlight[$flightID][] = $seatNumber;
+    }
+
+    // Reset the result set pointer
+    $result_other_passengers->data_seek(0);
     ?>
     <?php
     // Check if there are no other passengers
@@ -290,8 +315,9 @@
             </tr>
             <?php
             while ($row = $result_other_passengers->fetch_assoc()) {
-                $row['id'];
                 $other_passengerId = $row['id'];
+                $flightID = $row['Flight_ID'];
+                $takenSeats = isset($takenSeatsPerFlight[$flightID]) ? $takenSeatsPerFlight[$flightID] : [];
             ?>
                 <tr>
                     <td><?= $row['id'] ?></td>
@@ -305,55 +331,54 @@
                     <td><?= $row['Status'] ?></td>
                     <td><?= $row['Seat_Number'] ?></td>
                     <td class="btn-td">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OtherseatSelectionModal<?= $other_passengerId ?>">Update</button>
-                    <form id="viewForm" method="POST" style="display: none;" action="userinfo.php">
-                    <input type="hidden" id="emailInput" name="email" value="">
-                    </form>
-                    <button class="btn btn-outline-primary view-btn" onclick="submitEmailForm(this)" data-main-passenger="<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>">View</button>
-    <form method="post" action="UpdateBooking.php">
-    <div class="modal fade" id="OtherseatSelectionModal<?= $other_passengerId ?>" tabindex="-1" aria-labelledby="OtherseatSelectionModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="OtherseatSelectionModal">Select Your Seat</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Airplane seat map -->
-                    <div class="seat-map mb-3">
-                        <!-- Add your seat map image or seat layout here -->
-                        <img src="./assets/images/seatmap.png" alt="Airplane Seat Map" class="img-fluid">
-                    </div>
-                    <!-- Dropdown select for seat number -->
-                    <div class="mb-3">
-                    <label for="Other_SeatSelect" class="form-label">Select Seat Number</label>
-                        <select class="form-select" id="Other_SeatSelect" name="Other_SeatSelect">
-                                     <!-- Add your seat numbers here -->
-                         <option value='' disabled selected>Select Seat</option>
-                                     <?php 
-                                         $sections = ['A', 'B', 'C', 'D'];
-                                        foreach ($sections as $section) {
-                                            for ($i = 1; $i <= 15; $i++) {
-                                                $seatNumber = $section . $i ;
-                                         echo "<option value='$seatNumber'>$seatNumber</option>";
-                                        }
-                                     }
-                                 ?>
-                            </select>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <!-- Hidden input field to pass the Main Passenger ID -->
-                    <input type="hidden" name="other_passenger_id" value="<?=  $other_passengerId ?>">
-                    <button type="submit" class="btn btn-outline-success" name="other_confirm-btn">Confirm</button>
-                    <button type="submit" class="btn btn-outline-danger" name="other_decline-btn">Decline</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-</td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#OtherseatSelectionModal<?= $other_passengerId ?>">Update</button>
+                        <form id="viewForm" method="POST" style="display: none;" action="userinfo.php">
+                            <input type="hidden" id="emailInput" name="email" value="">
+                        </form>
+                        <button class="btn btn-outline-primary view-btn" onclick="submitEmailForm(this)" data-main-passenger="<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>">View</button>
+                        <form method="post" action="UpdateBooking.php">
+                            <div class="modal fade" id="OtherseatSelectionModal<?= $other_passengerId ?>" tabindex="-1" aria-labelledby="OtherseatSelectionModal" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="OtherseatSelectionModal">Select Your Seat</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="seat-map mb-3">
+                                                <img src="./assets/images/seatmap.png" alt="Airplane Seat Map" class="img-fluid">
+                                            </div>
+                                            <!-- Dropdown select for seat number -->
+                                            <div class="mb-3">
+                                                <label for="Other_SeatSelect<?= $other_passengerId ?>" class="form-label">Select Seat Number</label>
+                                                <select class="form-select" id="Other_SeatSelect<?= $other_passengerId ?>" name="Other_SeatSelect">
+                                                    <option value='' disabled selected>Select Seat</option>
+                                                    <?php 
+                                                    $sections = ['A', 'B', 'C', 'D'];
+                                                    foreach ($sections as $section) {
+                                                        for ($i = 1; $i <= 15; $i++) {
+                                                            $seatNumber = $section . $i;
+                                                            if (in_array($seatNumber, $takenSeats)) {
+                                                                echo "<option value='$seatNumber' disabled style='background-color: red;'>$seatNumber</option>";
+                                                            } else {
+                                                                echo "<option value='$seatNumber'>$seatNumber</option>";
+                                                            }
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="hidden" name="other_passenger_id" value="<?= $other_passengerId ?>">
+                                            <button type="submit" class="btn btn-outline-success" name="other_confirm-btn">Confirm</button>
+                                            <button type="submit" class="btn btn-outline-danger" name="other_decline-btn">Decline</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
                 </tr>
             <?php
             }

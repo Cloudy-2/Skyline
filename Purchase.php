@@ -185,7 +185,7 @@ if ($result && $result->num_rows > 0) {
                 <div class="boarding-pass">
                 <div class="header">
                         <div class="logo">
-                            <img src="/assets/images/logo.jpg" alt="Airplane Logo">
+                            <img src="./assets/images/logo.jpg" alt="Airplane Logo">
                         </div>
                         <div class="airline-name">
                             <h1>SKYLINE AIRWAYS</h1>
@@ -219,7 +219,7 @@ if ($result && $result->num_rows > 0) {
                         <h2 style="font-weight: bold;"><?php echo $row["trip_deptime"]; ?> - <?php echo $row["trip_depdate"]; ?></h2>
                     </div>
                     <div class="barcode">
-                        <img src="/assets/images/barcode.gif" alt="Barcode">
+                        <img src="./assets/images/barcode.gif" alt="Barcode">
                     </div>
                     <div class="footer">
                         <div class="section">
@@ -248,7 +248,7 @@ if ($result && $result->num_rows > 0) {
 crossorigin="anonymous"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
-$(document).ready(function(){
+    $(document).ready(function(){
     $('.view-btn').click(function(){
         var mainPassenger = $(this).data('mainpassenger');
         var flightID = $(this).data('flightid');
@@ -266,6 +266,14 @@ $(document).ready(function(){
         $('#status').text(status);
 
         $('#view-details').modal('show');
+    });
+
+    // Disable view button for bookings with status "Pending" or "Declined"
+    $('.view-btn').each(function() {
+        var status = $(this).data('status');
+        if (status === "Pending" || status === "Declined") {
+            $(this).prop('disabled', true);
+        }
     });
 
     // Download Ticket button click event

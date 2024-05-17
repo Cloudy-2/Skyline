@@ -62,6 +62,16 @@
         <h1 class="h1-anal">FLIGHTS</h1>
     </div>
     <div class="table-container">
+        <!-- Search Form -->
+        <form method="GET" action="">
+            <div class="mb-3">
+                <label for="search" class="form-label">Search Flights</label>
+                <input type="text" class="form-control" id="search" name="search" placeholder="Enter Flight Number or Departure Location" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+                <button type="submit" class="btn btn-primary mt-2">Search</button>
+                <a href="?" class="btn btn-secondary mt-2">Clear Search</a>
+            </div>
+        </form>
+
         <table class="table">
             <thead>
                 <tr>
@@ -77,16 +87,32 @@
                 // Include the database configuration file
                 include '../config/database.php';
 
-                // Query to fetch all flights
-                $query = "SELECT * FROM flights";
-                $result = mysqli_query($conn, $query);
+                // Check if the search parameter is set
+                $searchQuery = "";
+                if (isset($_GET['search'])) {
+                    $searchQuery = $_GET['search'];
+                }
+
+                // Query to fetch flights based on search
+                if ($searchQuery) {
+                    $query = "SELECT * FROM flights WHERE flight_number LIKE ? OR departure_location LIKE ?";
+                    $stmt = $conn->prepare($query);
+                    $searchParam = "%" . $searchQuery . "%";
+                    $stmt->bind_param("ss", $searchParam, $searchParam);
+                } else {
+                    $query = "SELECT * FROM flights";
+                    $stmt = $conn->prepare($query);
+                }
+
+                $stmt->execute();
+                $result = $stmt->get_result();
 
                 // Check if there are any flights
-                if (mysqli_num_rows($result) > 0) {
+                if ($result->num_rows > 0) {
                     // Iterate over each flight record and display it in a table row
-                    while ($row = mysqli_fetch_assoc($result)) {
+                    while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<td style='font-weight: bold;' . 'text-align: left;'>" . $row['flight_number'] . "</td>";
+                        echo "<td style='font-weight: bold; text-align: left;'>" . $row['flight_number'] . "</td>";
                         echo "<td>" . $row['departure_location'] . "</td>";
                         echo "<td>" . $row['arrival_location'] . "</td>";
                         echo "<td style='font-weight: bold;'>" . $row['Departure-Time'] . "</td>";
@@ -95,11 +121,12 @@
                     }
                 } else {
                     // If no flights found, display a message
-                    echo "<tr><td colspan='6'>No flights found</td></tr>";
+                    echo "<tr><td colspan='5'>No flights found</td></tr>";
                 }
 
                 // Close the database connection
-                mysqli_close($conn);
+                $stmt->close();
+                $conn->close();
                 ?>
             </tbody>
         </table>

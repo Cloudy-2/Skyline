@@ -111,8 +111,3 @@ function confirmBooking(mainPassengerId) {
     };
     xhr.send("mainPassengerId=" + mainPassengerId);
 }
-function submitEmailForm(button) {
-    var email = button.parentElement.parentElement.querySelector('td:nth-child(5)').innerText; // Assuming email is in the 5th column
-    document.getElementById('emailInput').value = email;
-    document.getElementById('viewForm').submit();
-}

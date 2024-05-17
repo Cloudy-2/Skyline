@@ -1,5 +1,5 @@
 <?php
-session_start(); // Start the session
+session_start();
 
 // Check if the user is an administrator
 $is_admin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'];
