@@ -28,8 +28,6 @@ $total_price = $ticket_price * $passenger_count; // Initialize total price with 
 // Initialize total price with the same value as the base ticket price
 $price = $total_price;
 
-
-
 include_once './config/database.php';
 ?>
 
@@ -41,7 +39,7 @@ include_once './config/database.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/confirm_booking.css">
-    <link rel="icon" href="./assets/images/favicon.jpg">
+    <link rel="icon" href="../assets/images/favicon.jpg">
     <title>Skyline - Confirm Booking</title>
 </head>
 <body>
@@ -137,7 +135,7 @@ for ($i = 1; $i <= $passenger_count; $i++) {
 
     // Add the ticket price for this passenger to the total ticket price
     $totalTicketPrice += $ticket_price;
-    echo '</div>';
+    echo '</div>'; // End of passenger-info
 }
 ?>
 <input type="hidden" name="mainEmail" id="mainEmail" value="<?php echo $user; ?>">
@@ -186,12 +184,12 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             <img src="./assets/images/gcash" alt="GCash Logo" class="payment-logo">
             <h1>GCash Payment</h1>
             <p>Merchant: Airways Flight Booking</p>
-            <p>Amount: <?php echo $totalTicketPrice; ?></p>
+            <p>Amount: <span id="gcash-amount"><?php echo $totalTicketPrice; ?></span></p>
             <label for="gcash-mobile-number">Mobile number</label>
             <input type="number" id="gcash-mobile-number" placeholder="Enter your mobile number" required>
             <label for="gcash-password">OTP</label>
             <input type="password" id="gcash-password" placeholder="Enter your GCash OTP" required>
-            <button onclick="validateAndLogin('gcash-mobile-number', 'gcash-password', 'gcash-popup')">Confirm</button>
+            <button onclick="validateAndLogin('gcash-mobile-number', 'gcash-password', 'gcash-popup')">PROCEED</button>
         </div>
     </div>
 </div>
@@ -236,13 +234,14 @@ for ($i = 1; $i <= $passenger_count; $i++) {
     // Function to calculate total price based on accommodation selection for each passenger
     function calculateTotalPrice(passengerIndex) {
         var selectedAccommodation = document.getElementById("accommodation_" + passengerIndex).value;
-        var originalPrice = parseFloat(document.getElementById("mainticket1").value);
+        var originalPrice = parseFloat(document.getElementById("mainticket1").value); // Using the base ticket price from the hidden input
+
         // Calculate ticket price for the selected accommodation
-        var ticketPrice = originalPrice;
+        var ticketPrice = originalPrice; // Default to base price
         if (selectedAccommodation === "business") {
-            ticketPrice *= 1.5;
+            ticketPrice *= 1.5; // Business class multiplier
         } else if (selectedAccommodation === "first") {
-            ticketPrice *= 2;
+            ticketPrice *= 2; // First class multiplier
         }
 
         // Check passenger age for discount
@@ -253,30 +252,34 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             age--;
         }
 
-
+        // Apply discount for passengers aged 60 or above
         if (age >= 60) {
             ticketPrice *= 0.9; // 10% discount
-            document.getElementById("discount_indicator_" + passengerIndex).style.display = "inline";
+            document.getElementById("discount_indicator_" + passengerIndex).style.display = "inline"; // Show discount indicator
         } else {
-            document.getElementById("discount_indicator_" + passengerIndex).style.display = "none";
+            document.getElementById("discount_indicator_" + passengerIndex).style.display = "none"; // Hide discount indicator
         }
+
         // Update the displayed ticket price for the passenger
         document.getElementById("displayed_ticket_price_" + passengerIndex).textContent = ticketPrice.toFixed(2);
+
         // Update the hidden input field for ticket price
         document.getElementById("hidden_ticket_price_" + passengerIndex).value = ticketPrice.toFixed(2);
 
+        // Update the overall price
         updateOverallPrice();
     }
 
     // Function to update the overall price
     function updateOverallPrice() {
         var overallPrice = 0;
-        var passengerCount = <?php echo $passenger_count; ?>;
+        var passengerCount = <?php echo $passenger_count; ?>; // Retrieve passenger count from PHP
         for (var i = 1; i <= passengerCount; i++) {
             overallPrice += parseFloat(document.getElementById("hidden_ticket_price_" + i).value);
         }
         document.getElementById("displayed_overall_price").textContent = overallPrice.toFixed(2);
-        document.getElementById("total_price").value = overallPrice.toFixed(2);
+        document.getElementById("total_price").value = overallPrice.toFixed(2); // Update hidden input for total price
+        
     }
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -290,9 +293,6 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             console.error("Total price element not found.");
         }
     });
-
-      
-    
 </script>
 
 </main>

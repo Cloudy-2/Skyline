@@ -92,30 +92,3 @@ function validateAndShowReceipt(mobileNumberInputId, otpInputId) {
     // Optionally, you can also call a function to populate the receipt details dynamically
     displayGCashReceipt();
 }
-// Function to update the displayed amount dynamically
-function updateAmount() {
-    // AJAX request to fetch the overall price
-    $.ajax({
-        url: 'get_overall_price.php', // Path to your PHP script
-        type: 'POST',
-        data: { overall_price: $('#displayed_overall_price').text() }, // Send the displayed overall price
-        dataType: 'json',
-        success: function(response) {
-            // Check if there's no error in the response
-            if (!response.error) {
-                // Update the content of the <p> element with the received overall price value
-                $('#amount').text('Amount: ' + response.overall_price);
-            } else {
-                // Handle the error if any
-                console.error('Error:', response.error);
-            }
-        },
-        error: function(xhr, status, error) {
-            // Handle AJAX error
-            console.error('AJAX Error:', error);
-        }
-    });
-}
-
-// Call the function to update the displayed amount
-updateAmount();
