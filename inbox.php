@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skyline - Inbox</title>
-    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
     <link rel="icon" href="./assets/images/favicon.jpg">
     <link rel="stylesheet" href="./css/inbox.css">
 </head>
@@ -39,7 +39,7 @@
         include 'config/database.php';
 
         // Query to fetch emails
-        $query = "SELECT `contact_id`, `Email`, `Message`, `To_` FROM `user_contact` WHERE `To_` = '$user'";
+        $query = "SELECT `contact_id`, `Email`, `Message`, `To_` FROM `user_reply` WHERE `To_` = '$user'";
         $result = mysqli_query($conn, $query);
 
         // Check if there are any emails

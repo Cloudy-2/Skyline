@@ -26,7 +26,6 @@ $destination = isset($_GET['destination']) ? htmlspecialchars($_GET['destination
           <ul>
               <li><a href="flights.php">Flights</a></li>
               <li><a href="offers.php">Offers</a></li>
-              <li><a href="analytics.php">Analytics</a></li>
               <li><a href="contact.php">Contact</a></li> 
               <?php
               session_start(); // Start the session
@@ -64,8 +63,9 @@ $destination = isset($_GET['destination']) ? htmlspecialchars($_GET['destination
             <span><i class="fas fa-plane-departure"></i></span>
             <div class="input__content">
               <div class="input__group">
+              <label for="locationInput">Departure</label>
                 <input type="text" list="locations" id="locationInput" />
-                <label>Departure</label>
+               
               </div>
               <p>Select a location</p>
             </div>
@@ -89,10 +89,9 @@ $destination = isset($_GET['destination']) ? htmlspecialchars($_GET['destination
     <div class="form__group">
         <span><i class="fas fa-plane-arrival"></i></span>
         <div class="input__content">
-          <div class="input__group">
-          <input type="text" list="destinations" id="destinationInput" value="<?php echo isset($_GET['destination']) ? htmlspecialchars($_GET['destination']) : ''; ?>">
-
-            <label>Destination</label>
+          <div class="input__group">    
+            <label for="destinationInput">Destination</label>
+            <input type="text" list="destinations" id="destinationInput" value="<?php echo isset($_GET['destination']) ? htmlspecialchars($_GET['destination']) : ''; ?>">
           </div>
           <p>Select a destination</p>
         </div>
@@ -118,7 +117,7 @@ $destination = isset($_GET['destination']) ? htmlspecialchars($_GET['destination
           <div class="input__content">
             <div class="input__group">
             <input type="text" min="<?= date('Y-m-d') ?>" id="departureInput" onclick="openDatePicker()" />
-              <label>Departure Date</label>
+              <label for="departureInput">Departure Date</label>
             </div>
             <p>Select Date</p>
           </div>
@@ -212,7 +211,7 @@ $destination = isset($_GET['destination']) ? htmlspecialchars($_GET['destination
       <div class="section__container subscribe__container">
         <h2 class="section__header">Subscribe newsletter & get latest news</h2>
         <form class="subscribe__form">
-          <input type="text" placeholder="Enter your email here" />
+          <input type="text" id="email" placeholder="Enter your email here" autocomplete="email"/>
           <button class="btn">Subscribe</button>
         </form>
       </div>

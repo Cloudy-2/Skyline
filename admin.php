@@ -94,7 +94,7 @@
         $total_users = 0;
     }
 
-    $query = "SELECT COUNT(contact_id) AS total_comments FROM admin_contact";
+    $query = "SELECT COUNT(contact_id) AS total_comments FROM admin_reply";
 
         // Execute the query
         $result = mysqli_query($conn, $query);

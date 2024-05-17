@@ -54,7 +54,7 @@
             include '../config/database.php';
 
             // Query to fetch contact information
-            $query = "SELECT `name`, `email`, `message` FROM `admin_contact`";
+            $query = "SELECT `name`, `email`, `message` FROM `admin_reply`";
             $result = mysqli_query($conn, $query);
 
             // Check if there are any contact records
@@ -73,7 +73,6 @@
                 echo "<tr><td colspan='5'>No contact information found</td></tr>";
             }
 
-            // Close the database connection
             mysqli_close($conn);
             ?>
             </tbody>
@@ -97,7 +96,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-TO">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['username']; ?>" readonly>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['username']; ?>" autocomplete="email" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="replyMessage" class="form-label">Your Message</label>
