@@ -28,6 +28,8 @@ $total_price = $ticket_price * $passenger_count; // Initialize total price with 
 // Initialize total price with the same value as the base ticket price
 $price = $total_price;
 
+
+
 include_once './config/database.php';
 ?>
 
@@ -184,12 +186,12 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             <img src="./assets/images/gcash" alt="GCash Logo" class="payment-logo">
             <h1>GCash Payment</h1>
             <p>Merchant: Airways Flight Booking</p>
-            <p>Amount: <?php echo $total_price; ?></p>
+            <p>Amount: <?php echo $totalTicketPrice; ?></p>
             <label for="gcash-mobile-number">Mobile number</label>
             <input type="number" id="gcash-mobile-number" placeholder="Enter your mobile number" required>
             <label for="gcash-password">OTP</label>
             <input type="password" id="gcash-password" placeholder="Enter your GCash OTP" required>
-            <button onclick="validateAndLogin('gcash-mobile-number', 'gcash-password', 'gcash-popup')">PROCEED</button>
+            <button onclick="validateAndLogin('gcash-mobile-number', 'gcash-password', 'gcash-popup')">Confirm</button>
         </div>
     </div>
 </div>
@@ -236,11 +238,19 @@ for ($i = 1; $i <= $passenger_count; $i++) {
         var selectedAccommodation = document.getElementById("accommodation_" + passengerIndex).value;
         var originalPrice = parseFloat(document.getElementById("mainticket1").value);
         // Calculate ticket price for the selected accommodation
+<<<<<<< HEAD
+        var ticketPrice = originalPrice; // Default to base price
+        if (selectedAccommodation === "Business") {
+            ticketPrice *= 1.5; // Business class multiplier
+        } else if (selectedAccommodation === "First Class") {
+            ticketPrice *= 2; // First class multiplier
+=======
         var ticketPrice = originalPrice;
         if (selectedAccommodation === "business") {
             ticketPrice *= 1.5;
         } else if (selectedAccommodation === "first") {
             ticketPrice *= 2;
+>>>>>>> c8c441e819aeb413683557e138dbd8360e315a10
         }
 
         // Check passenger age for discount
@@ -288,6 +298,9 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             console.error("Total price element not found.");
         }
     });
+
+      
+    
 </script>
 
 </main>

@@ -183,17 +183,17 @@ if ($result && $result->num_rows > 0) {
             </div>
             <div class="modal-body" id="modal-body">
                 <div class="boarding-pass">
-                    <div class="header">
+                <div class="header">
                         <div class="logo">
                             <img src="./assets/images/logo.jpg" alt="Airplane Logo">
                         </div>
                         <div class="airline-name">
                             <h1>SKYLINE AIRWAYS</h1>
-                            <p>To Travel Safe Is Our Deal!</p>
+                            <p style="padding-left: 0;">Your Trusted Airline Companion</p>
                         </div>
                         <div class="boarding-pass-label">
-                            <p>STATUS</p>
-                            <h1><span id="status"></span></h1>
+                        <p style="text-align: start; padding-left: 0;">STATUS:</p>
+                            <h4><span id="status"></span></h4>
                         </div>
                     </div>
                     <div class="passenger-info">
@@ -215,8 +215,8 @@ if ($result && $result->num_rows > 0) {
                         </div>
                     </div>
                     <div class="boarding-time">
-                        <p>BOARDING TIME</p>
-                        <h2><?php echo $row["trip_deptime"]; ?> - <?php echo $row["trip_depdate"]; ?></h2>
+                        <p style="font-weight: bold;">BOARDING TIME</p>
+                        <h2 style="font-weight: bold;"><?php echo $row["trip_deptime"]; ?> - <?php echo $row["trip_depdate"]; ?></h2>
                     </div>
                     <div class="barcode">
                         <img src="./assets/images/barcode.gif" alt="Barcode">
