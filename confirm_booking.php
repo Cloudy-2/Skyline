@@ -238,19 +238,11 @@ for ($i = 1; $i <= $passenger_count; $i++) {
         var selectedAccommodation = document.getElementById("accommodation_" + passengerIndex).value;
         var originalPrice = parseFloat(document.getElementById("mainticket1").value);
         // Calculate ticket price for the selected accommodation
-<<<<<<< HEAD
-        var ticketPrice = originalPrice; // Default to base price
-        if (selectedAccommodation === "Business") {
-            ticketPrice *= 1.5; // Business class multiplier
-        } else if (selectedAccommodation === "First Class") {
-            ticketPrice *= 2; // First class multiplier
-=======
         var ticketPrice = originalPrice;
         if (selectedAccommodation === "business") {
             ticketPrice *= 1.5;
         } else if (selectedAccommodation === "first") {
             ticketPrice *= 2;
->>>>>>> c8c441e819aeb413683557e138dbd8360e315a10
         }
 
         // Check passenger age for discount
