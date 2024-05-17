@@ -68,7 +68,6 @@ header {
   
   .logo img {
     height: 50px;
-    margin-right: 15px;
   }
   
   .title h1 {
@@ -246,9 +245,6 @@ header {
  background-color: red;
 }
 
-
-
-
 /* halo others */
 
 .row {
@@ -281,13 +277,20 @@ margin-bottom: -5px;
   padding: 20px;
 }
 
+.header .logo {
+  display: flex;
+  align-items: center;
+  padding-left: 0; /* Ensuring no padding is added */
+}
+
 .header .logo img {
-  width: 60px;
+  width: 120px;
   height: auto;
 }
 
 .header .airline-name {
-  margin-right: 330px;
+  width: 100%;
+  margin-right: 100px; /* Align the airline name to the left */
 }
 
 .header .airline-name h1 {
@@ -302,7 +305,9 @@ margin-bottom: -5px;
 
 .boarding-pass-label {
   text-align: right;
+  flex-grow: 1; /* Allow the label to take up remaining space */
 }
+
 
 .boarding-pass-label p {
   font-size: 18px;
