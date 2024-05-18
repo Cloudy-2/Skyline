@@ -39,7 +39,7 @@ function loginAndClosePopup(popupId) {
 }
 
 // Function to validate input and perform login
-function validateAndLogin(inputField1, inputField2, popupId) {
+function validateAndLogin(inputField1, inputField2, popupId, username) {
     var input1 = document.getElementById(inputField1).value;
     var input2 = document.getElementById(inputField2).value;
 
@@ -49,73 +49,37 @@ function validateAndLogin(inputField1, inputField2, popupId) {
     }
 
     // Perform login process
-    loginAndClosePopup(popupId);
+    loginAndRedirectToGcash(username);
 }
 
-// Function to enable radio buttons
-function enableRadioButtons() {
-    var radioButtons = document.querySelectorAll('input[name="payment-method"]');
-    for (var i = 0; i < radioButtons.length; i++) {
-        radioButtons[i].disabled = false;
+// Function to handle GCash login and redirect
+function loginAndRedirectToGcash(username) {
+    // Assuming login is successful, redirect to gcash.php
+    var mobileNumber = document.getElementById('gcash-mobile-number').value;
+    var overallPrice = document.getElementById("displayed_overall_price").textContent;
+
+    // Redirect to gcash.php with necessary parameters
+    window.location.href = `gcash.php?mobile=${mobileNumber}&amount=${overallPrice}&username=${username}`;
+}
+
+// Function to update GCash amount
+function updateGcashAmount() {
+    var overallPrice = document.getElementById("displayed_overall_price").textContent;
+    document.getElementById("gcash-amount").textContent = overallPrice;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize totalPriceElement after the DOM has fully loaded
+    var totalPriceElement = document.querySelector(".total-price");
+    // Check if totalPriceElement is not null before accessing its properties
+    if (totalPriceElement) {
+        var totalPrice = parseFloat(totalPriceElement.innerText.replace("Overall Price: ₱", ""));
+        document.getElementById("displayed_overall_price").textContent = totalPrice.toFixed(2);
+    } else {
+        console.error("Total price element not found.");
     }
-}
 
-// Function to close pop-up and unselect radio button
-function closePopupAndUnselectRadio(popupId, radioId) {
-    togglePopup(popupId);
-    document.getElementById(radioId).checked = false;
-}
-
-// Add event listener to close icon
-var closeIcons = document.querySelectorAll('.close-icon');
-closeIcons.forEach(function(closeIcon) {
-    closeIcon.addEventListener('click', function() {
-        var popupParent = this.parentElement;
-        var popupId = popupParent.getAttribute('id');
-        if (popupId) {
-            var radioId = popupId.split('-')[0] + '-radio';
-            closePopupAndUnselectRadio(popupId, radioId);
-        }
-    });
+    // Attach event listener to GCash radio button
+    document.getElementById("gcash-radio").addEventListener("click", updateGcashAmount);
 });
 
-// Function to validate GCash payment and show receipt
-function validateAndShowReceipt(mobileNumberInputId, otpInputId) {
-    var mobileNumber = document.getElementById(mobileNumberInputId).value;
-    var otp = document.getElementById(otpInputId).value;
-
-    // Perform validation here (e.g., check if mobile number and OTP are not empty)
-
-    // Assuming validation is successful, display the receipt popup
-    togglePopup('gcash-popup'); // Show the GCash popup
-
-    // Optionally, you can also call a function to populate the receipt details dynamically
-    displayGCashReceipt();
-}
-// Function to update the displayed amount dynamically
-function updateAmount() {
-    // AJAX request to fetch the overall price
-    $.ajax({
-        url: 'get_overall_price.php', // Path to your PHP script
-        type: 'POST',
-        data: { overall_price: $('#displayed_overall_price').text() }, // Send the displayed overall price
-        dataType: 'json',
-        success: function(response) {
-            // Check if there's no error in the response
-            if (!response.error) {
-                // Update the content of the <p> element with the received overall price value
-                $('#amount').text('Amount: ' + response.overall_price);
-            } else {
-                // Handle the error if any
-                console.error('Error:', response.error);
-            }
-        },
-        error: function(xhr, status, error) {
-            // Handle AJAX error
-            console.error('AJAX Error:', error);
-        }
-    });
-}
-
-// Call the function to update the displayed amount
-updateAmount();

@@ -356,7 +356,6 @@ main {
 }
 
 .payment-method {
-    text-align: center;
     margin-top: 20px; /* Add margin at the top for better spacing */
 }
 
@@ -404,23 +403,23 @@ main {
     border-radius: 10px;
 }
 
-#gcash-popup .payment-method {
-    text-align: center;
-}
 
 #gcash-popup .payment-logo {
+    margin-left: 110px;
     width: 200px; /* Adjust logo size */
     height: auto; /* Allow height to adjust automatically */
     margin-bottom: 20px;
 }
 
 #gcash-popup h1 {
+    text-align: center;
     font-size: 24px;
     margin-bottom: 10px;
 }
 
 #gcash-popup p {
     margin-bottom: 10px;
+    text-align: center;
 }
 
 #gcash-popup input[type="text"] {

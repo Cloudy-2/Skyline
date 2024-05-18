@@ -2,7 +2,6 @@
 session_start();
 
 if(isset($_POST['Flight_Number'])) {
-    // Retrieve the Flight Number value from the form
     $flightNumber = $_POST['Flight_Number'];
 }
 
@@ -20,14 +19,12 @@ if (!isset($_POST['passengers'])) {
     exit();
 }
 
-// Retrieve number of passengers from the form
 $passenger_count = $_POST['passengers'];
-$ticket_price = $_POST['price']; // Assuming this is the base ticket price
-$total_price = $ticket_price * $passenger_count; // Initialize total price with base ticket price
+$ticket_price = $_POST['price'];
+$total_price = $ticket_price * $passenger_count;
 
-// Initialize total price with the same value as the base ticket price
 $price = $total_price;
-
+    
 
 
 include_once './config/database.php';
@@ -41,7 +38,7 @@ include_once './config/database.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/confirm_booking.css">
-    <link rel="icon" href="./assets/images/favicon.jpg">
+    <link rel="icon" href="../assets/images/favicon.jpg">
     <title>Skyline - Confirm Booking</title>
 </head>
 <body>
@@ -88,7 +85,6 @@ $totalTicketPrice = 0;
 
 // Loop through each passenger
 for ($i = 1; $i <= $passenger_count; $i++) {
-    // Passenger details inputs
     echo '<div class="passenger-info">';
     echo '<h2>Flight - #' . $flightNumber = $_POST['Flight_Number'] . '</h2>';
     echo '<input type="hidden" name="Flight_Number" value="' .  $flightNumber = $_POST['Flight_Number'] . '">';
@@ -113,23 +109,23 @@ for ($i = 1; $i <= $passenger_count; $i++) {
     echo '<div class="flight-seats">';
     echo '<label for="seat_' . $i . '">Select Seat:</label>';
     echo '<select id="seat_' . $i . '" name="seat_' . $i . '">';
-    echo '<option value="window">Window Seat</option>';
-    echo '<option value="aisle">Aisle Seat</option>';
-    echo '<option value="middle">Middle Seat</option>';
+    echo '<option value="Window">Window Seat</option>';
+    echo '<option value="Aisle">Aisle Seat</option>';
+    echo '<option value="Middle">Middle Seat</option>';
     echo '</select>';
     echo '</div>';
     // Accommodation Selection for each passenger
     echo '<div class="flight-accommodations">';
     echo '<label for="accommodation_' . $i . '">Select Accommodation:</label>';
     echo '<select id="accommodation_' . $i . '" name="accommodation_' . $i . '" onchange="calculateTotalPrice(' . $i . ')" required>';
-    echo '<option value="economy">Economy Class</option>';
-    echo '<option value="business">Business Class</option>';
-    echo '<option value="first">First Class</option>';
+    echo '<option value="Economy">Economy Class</option>';
+    echo '<option value="Business">Business Class</option>';
+    echo '<option value="First Class">First Class</option>';
     echo '</select>';
     
     // Indicator for discount
     echo '<span id="discount_indicator_' . $i . '" class="discount-indicator" style="display: none; color: green; font-weight: bold;">(Discount Applied)</span>';
-    echo '</div>'; // End of flight-accommodations
+    echo '</div>';
     
     // Display and calculate ticket price for each passenger
     echo '<div class="ticket-price">Ticket Price: ₱<span id="displayed_ticket_price_' . $i . '" class="displayed_price">' . $ticket_price . '</span></div>';
@@ -186,15 +182,17 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             <img src="./assets/images/gcash" alt="GCash Logo" class="payment-logo">
             <h1>GCash Payment</h1>
             <p>Merchant: Airways Flight Booking</p>
-            <p>Amount: <?php echo $totalTicketPrice; ?></p>
+            <p>Amount: ₱<span id="gcash-amount"><?php echo $totalTicketPrice; ?></span></p>
             <label for="gcash-mobile-number">Mobile number</label>
-            <input type="number" id="gcash-mobile-number" placeholder="Enter your mobile number" required>
-            <label for="gcash-password">OTP</label>
-            <input type="password" id="gcash-password" placeholder="Enter your GCash OTP" required>
-            <button onclick="validateAndLogin('gcash-mobile-number', 'gcash-password', 'gcash-popup')">Confirm</button>
+            <input type="number" id="gcash-mobile-number" placeholder="Enter your Mobile Number" required>
+            <label for="gcash-password">MPIN</label>
+            <input type="password" id="gcash-password" placeholder="Enter your MPIN" required>
+            <!-- Pass the username to the validateAndLogin function -->
+            <button onclick="validateAndLogin('gcash-mobile-number', 'gcash-password', 'gcash-popup', '<?php echo $user; ?>')">Confirm</button>
         </div>
     </div>
 </div>
+
 
 <!-- PayPal pop-up -->
 <div id="paypal-popup" class="popup">
@@ -237,12 +235,13 @@ for ($i = 1; $i <= $passenger_count; $i++) {
     function calculateTotalPrice(passengerIndex) {
         var selectedAccommodation = document.getElementById("accommodation_" + passengerIndex).value;
         var originalPrice = parseFloat(document.getElementById("mainticket1").value);
+
         // Calculate ticket price for the selected accommodation
-        var ticketPrice = originalPrice;
-        if (selectedAccommodation === "business") {
-            ticketPrice *= 1.5;
-        } else if (selectedAccommodation === "first") {
-            ticketPrice *= 2;
+        var ticketPrice = originalPrice; // Default to base price
+        if (selectedAccommodation === "Business") {
+            ticketPrice *= 1.5; // Business class multiplier
+        } else if (selectedAccommodation === "First Class") {
+            ticketPrice *= 2; // First class multiplier
         }
 
         // Check passenger age for discount
@@ -253,18 +252,21 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             age--;
         }
 
-
+        // Apply discount for passengers aged 60 or above
         if (age >= 60) {
             ticketPrice *= 0.9; // 10% discount
             document.getElementById("discount_indicator_" + passengerIndex).style.display = "inline";
         } else {
             document.getElementById("discount_indicator_" + passengerIndex).style.display = "none";
         }
+
         // Update the displayed ticket price for the passenger
         document.getElementById("displayed_ticket_price_" + passengerIndex).textContent = ticketPrice.toFixed(2);
+
         // Update the hidden input field for ticket price
         document.getElementById("hidden_ticket_price_" + passengerIndex).value = ticketPrice.toFixed(2);
 
+        // Update the overall price
         updateOverallPrice();
     }
 
