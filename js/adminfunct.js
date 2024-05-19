@@ -111,3 +111,13 @@ function confirmBooking(mainPassengerId) {
     };
     xhr.send("mainPassengerId=" + mainPassengerId);
 }
+function submitEmailForm(button) {
+    var mainPassengerData = button.getAttribute('data-main-passenger');
+    var email = JSON.parse(mainPassengerData).email; // Assuming email is stored in the 'email' attribute of mainPassengerData
+
+    // Set the email value in the hidden input field
+    document.getElementById('emailInput').value = email;
+
+    // Submit the form
+    document.getElementById('viewForm').submit();
+}

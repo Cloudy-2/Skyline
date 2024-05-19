@@ -14,10 +14,11 @@ $passenger_count = 15;
 $error_message = "Input Data Doesn't Match to Your Login Data.";
 
 // Prepare and bind parameters for the main passenger insertion
-$stmt_main_passenger = $conn->prepare("INSERT INTO main_passengers (Flight_ID, first_name, last_name, email, contact_number, dob, seat, accommodation, ticket_price, total_price, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt_main_passenger->bind_param("ssssssssdds", $flight_id, $first_name_main, $last_name_main, $email_main, $contact_number_main, $dob_main, $seat_main, $accommodation_main, $main_ticket_price, $total_price_main, $status);
+$stmt_main_passenger = $conn->prepare("INSERT INTO main_passengers (Flight_ID, first_name, last_name, email, contact_number, dob, seat, accommodation, ticket_price, total_price, Status, prof_payment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt_main_passenger->bind_param("ssssssssddss", $flight_id, $first_name_main, $last_name_main, $email_main, $contact_number_main, $dob_main, $seat_main, $accommodation_main, $main_ticket_price, $total_price_main, $status, $prof_payment);
 
 // Retrieve data from $_POST array for the main passenger
+$prof_payment = $_POST['prof'];
 $flight_id = $flightNumber;
 $first_name_main = $_POST['first_name_1'];
 $last_name_main = $_POST['last_name_1'];
@@ -52,7 +53,7 @@ for ($i = 2; $i <= $passenger_count; $i++) {
 
         // Prepare SQL statement for other passengers
         $stmt_other_passenger = $conn->prepare("INSERT INTO Other_passengers (Flight_ID, MainPassenger, first_name, last_name, email, contact_number, dob, seat, accommodation, ticket_price, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt_other_passenger->bind_param("sisssssssds", $flight_id, $main_passenger_id, $first_name, $last_name, $email, $contact_number, $dob, $seat, $accommodation, $ticket_price, $status);
+        $stmt_other_passenger->bind_param("sisssssssds", $flight_id, $main_passenger_id, $first_name, $last_name, $email, $contact_number, $dob, $seat, $accommodation, $ticket_price, $status,);
 
         // Execute the statement for other passengers
         if ($stmt_other_passenger->execute() !== TRUE) {

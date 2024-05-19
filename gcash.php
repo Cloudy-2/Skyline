@@ -28,7 +28,7 @@ if (isset($_GET['mobile']) && isset($_GET['amount']) && isset($_GET['username'])
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gcash - Payment Receipt</title>
     <link rel="icon" href="./assets/images/gcash">
-    <link rel="stylesheet" href="/css/gcash.css">
+    <link rel="stylesheet" href="./css/gcash.css">
 </head>
 <body>
     <div class="receipt-container">

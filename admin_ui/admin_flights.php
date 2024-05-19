@@ -45,12 +45,12 @@
                 } else {
                     // If the user is not an admin, redirect to the index page
                     header("Location: index.php");
-                    exit(); // Stop script execution
+                    exit();
                 }
             } else {
                 // If the user is not logged in, redirect to the login page
                 header("Location: login.php");
-                exit(); // Stop script execution
+                exit();
             }
             ?>
         </ul>  

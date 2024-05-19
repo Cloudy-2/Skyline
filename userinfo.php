@@ -79,6 +79,16 @@
 
         include './config/database.php';
 
+$sql = " SELECT * FROM main_passengers WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$results = $stmt->get_result();
+if ($results->num_rows > 0) {
+    // Output data of the first row (assuming there's only one user with the provided email)
+    $row = $results->fetch_assoc();
+}
+
         $sql = "SELECT `reg_id`, `reg_firstname`, `reg_lastname`, `reg_email`, `reg_pass`, `reg_region`, `reg_province`, `reg_city`, `reg_barangay`, `reg_idUpload`, `gender`, `dob`, `age`, `status`, `phone`, `nationality` FROM `logindata` WHERE `reg_email` = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $email);
@@ -95,6 +105,10 @@
             <div for="idimg" class="ID">
                 <input type="image" name="idimg" id="idimg" style="width: 400px; height: 400px" src="data:image/jpeg;base64,<?php echo base64_encode($row['reg_idUpload']); ?>" alt="ID Picture"><br>
             </div>
+            <label for="prof">Prof of Payment</label>
+            <div for="prof" class="prof">
+    <input type="image" name="prof" id="prof" style="width: 400px; height: 400px" src="<?php echo base64_encode($row['prof_payment']); ?>">
+</div>
 
             <form>
                 <div class="grid">
