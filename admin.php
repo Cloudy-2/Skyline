@@ -192,6 +192,7 @@
                     <th>Total Price</th>
                     <th>Status</th>
                     <th>Seat#</th>
+                    <th>Receipt</th>
                     <th>Action</th>
                 </tr>
                 <?php
@@ -211,12 +212,12 @@
                         <td>₱ <?= $main_passenger_data['total_price'] ?></td>
                         <td><?= $main_passenger_data['Status'] ?></td>
                         <td><?= $main_passenger_data['Seat_Number'] ?></td>
+                        <td><?= $main_passenger_data['prof_payment'] ?></td>
                         <td class="btn-td">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>">UPDATE</button>
-                            <form id="viewForm" method="POST" style="display: none;" action="userinfo.php">
-                                <input type="hidden" id="emailInput" name="email" value="">
-                            </form>
-                            <button class="btn btn-outline-primary view-btn" onclick="submitEmailForm(this)" data-main-passenger="<?= htmlspecialchars(json_encode($main_passenger_data), ENT_QUOTES, 'UTF-8') ?>">View</button>
+
+                            <button class="btn btn-outline-primary view-btn" onclick="populateAndShowModal(this)" data-main-passenger="<?php echo htmlspecialchars(json_encode($main_passenger_data), ENT_QUOTES, 'UTF-8'); ?>">View</button>
+
 
                             <form method="post" action="UpdateBooking.php">
                                 <div class="modal fade" id="seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>" tabindex="-1" aria-labelledby="seatSelectionModalLabel" aria-hidden="true">
@@ -250,6 +251,8 @@
                                                         ?>
                                                     </select>
                                                 </div>
+                                                <!-- Additional passenger information can be displayed here -->
+                                                <div id="passengerInfo<?= $main_passenger_data['MainPassenger'] ?>"></div>
                                             </div>
                                             <div class="modal-footer">
                                                 <input type="hidden" name="main_passenger_id" value="<?= $main_passenger_data['MainPassenger'] ?>">
@@ -260,7 +263,30 @@
                                     </div>
                                 </div>
                             </form>
+                            
+                        
+
+                               <!-- Modal for displaying passenger info -->
+            <div class="modal fade" id="viewModal<?php echo $main_passenger_data['MainPassenger']; ?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewModalLabel">Passenger Information</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
                         </td>
+
                     </tr>
                 <?php
                 }
@@ -378,6 +404,24 @@
                                 </div>
                             </div>
                         </form>
+
+                        <!-- Modal for displaying passenger info -->
+                        <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="viewModalLabel">Passenger Information</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body" id="viewModalBody">
+                                                <!-- Passenger information will be populated here -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                     </td>
                 </tr>
             <?php

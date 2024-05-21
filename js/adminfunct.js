@@ -121,3 +121,36 @@ function submitEmailForm(button) {
     // Submit the form
     document.getElementById('viewForm').submit();
 }
+
+
+//modal mainpassenger view
+function populateAndShowModal(button) {
+    var mainPassengerData = JSON.parse(button.getAttribute('data-main-passenger'));
+    var modalBody = document.querySelector('#viewModalBody');
+    modalBody.innerHTML = ''; // Clear existing content
+
+    // Create paragraph elements for passenger information
+    var nameParagraph = document.createElement('p');
+    nameParagraph.textContent = 'Name: ' + (mainPassengerData.first_name ?? '') + ' ' + (mainPassengerData.last_name ?? '');
+    modalBody.appendChild(nameParagraph);
+
+    var emailParagraph = document.createElement('p');
+    emailParagraph.textContent = 'Email: ' + (mainPassengerData.email ?? '');
+    modalBody.appendChild(emailParagraph);
+
+    var phoneParagraph = document.createElement('p');
+    phoneParagraph.textContent = 'Phone: ' + (mainPassengerData.contact_number ?? '');
+    modalBody.appendChild(phoneParagraph);
+
+    // Create image element for the receipt
+    var receiptImage = document.createElement('img');
+    receiptImage.src = mainPassengerData.prof_payment;
+    receiptImage.alt = 'Receipt Image';
+    receiptImage.style.maxWidth = '100%';
+    receiptImage.style.height = 'auto';
+    modalBody.appendChild(receiptImage);
+
+    // Show the modal
+    var viewModal = new bootstrap.Modal(document.querySelector('#viewModal'));
+    viewModal.show();
+}
