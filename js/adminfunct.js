@@ -122,35 +122,54 @@ function submitEmailForm(button) {
     document.getElementById('viewForm').submit();
 }
 
+//zoom receipt
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all elements with the class 'zoomable-image'
+    var zoomableImages = document.querySelectorAll('.zoomable-image');
+    
+    // Loop through each zoomable image
+    zoomableImages.forEach(function(image) {
+        // Add click event listener to each image
+        image.addEventListener('click', function() {
+            // Create a new div element to display the enlarged image
+            var zoomedImage = document.createElement('div');
+            zoomedImage.className = 'zoomed-image';
+            
+            // Create an image element inside the zoomed div
+            var img = document.createElement('img');
+            img.src = image.src;
+            zoomedImage.appendChild(img);
+            
+            // Append the zoomed image div to the body
+            document.body.appendChild(zoomedImage);
+            
+            // Add click event listener to close the zoomed image when clicked
+            zoomedImage.addEventListener('click', function() {
+                document.body.removeChild(zoomedImage);
+            });
+        });
+    });
+});
 
-//modal mainpassenger view
-function populateAndShowModal(button) {
-    var mainPassengerData = JSON.parse(button.getAttribute('data-main-passenger'));
-    var modalBody = document.querySelector('#viewModalBody');
-    modalBody.innerHTML = ''; // Clear existing content
 
-    // Create paragraph elements for passenger information
-    var nameParagraph = document.createElement('p');
-    nameParagraph.textContent = 'Name: ' + (mainPassengerData.first_name ?? '') + ' ' + (mainPassengerData.last_name ?? '');
-    modalBody.appendChild(nameParagraph);
 
-    var emailParagraph = document.createElement('p');
-    emailParagraph.textContent = 'Email: ' + (mainPassengerData.email ?? '');
-    modalBody.appendChild(emailParagraph);
+$(document).ready(function(){
+    $('.view-btn').click(function(){
+        var mainPassenger = $(this).data('mainpassenger');
+        var flightID = $(this).data('flightid');
+        var firstName = $(this).data('firstname');
+        var lastName = $(this).data('lastname');
+        var seatNumber = $(this).data('seatnumber');
+        var status = $(this).data('status');
 
-    var phoneParagraph = document.createElement('p');
-    phoneParagraph.textContent = 'Phone: ' + (mainPassengerData.contact_number ?? '');
-    modalBody.appendChild(phoneParagraph);
+        // Populate modal with data
+        $('#mainPassenger').text(mainPassenger);
+        $('#flightID').text(flightID);
+        $('#firstName').text(firstName);
+        $('#lastName').text(lastName);
+        $('#seatNumber').text(seatNumber);
+        $('#status').text(status);
 
-    // Create image element for the receipt
-    var receiptImage = document.createElement('img');
-    receiptImage.src = mainPassengerData.prof_payment;
-    receiptImage.alt = 'Receipt Image';
-    receiptImage.style.maxWidth = '100%';
-    receiptImage.style.height = 'auto';
-    modalBody.appendChild(receiptImage);
-
-    // Show the modal
-    var viewModal = new bootstrap.Modal(document.querySelector('#viewModal'));
-    viewModal.show();
-}
+        $('#viewModal').modal('show');
+    });
+});

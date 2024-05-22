@@ -212,12 +212,15 @@
                         <td>₱ <?= $main_passenger_data['total_price'] ?></td>
                         <td><?= $main_passenger_data['Status'] ?></td>
                         <td><?= $main_passenger_data['Seat_Number'] ?></td>
-                        <td><img src="data:image/jpeg;base64,<?= base64_encode($main_passenger_data['prof']) ?>" /></td>
+                        <td class="receipt"><img class="zoomable-image" src="data:image/jpeg;base64,<?= base64_encode($main_passenger_data['prof']) ?>" /></td>
+
+
 
                         <td class="btn-td">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>">UPDATE</button>
 
-                            <button class="btn btn-outline-primary view-btn" onclick="populateAndShowModal(this)" data-main-passenger="<?php echo htmlspecialchars(json_encode($main_passenger_data), ENT_QUOTES, 'UTF-8'); ?>">View</button>
+                            <button class="btn btn-outline-primary view-btn" data-mainpassenger="<?php echo $main_passenger["MainPassenger"]; ?>" data-flightid="<?php echo $main_passenger["Flight_ID"]; ?>" data-firstname="<?php echo $main_passenger["first_name"]; ?>" data-lastname="<?php echo $main_passenger["last_name"]; ?>" data-seatnumber="<?php echo $main_passenger["Seat_Number"]; ?>" data-status="<?php echo $main_passenger["Status"]; ?>">View Details</button>
+                            
 
 
                             <form method="post" action="UpdateBooking.php">
@@ -265,37 +268,32 @@
                                 </div>
                             </form>
                             
-                        
-
-                               <!-- Modal for displaying passenger info -->
-            <div class="modal fade" id="viewModal<?php echo $main_passenger_data['MainPassenger']; ?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="viewModalLabel">Passenger Information</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
+                            <!-- Modal for displaying passenger info -->
+                            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="viewModalLabel">Passenger Information</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
-
                     </tr>
                 <?php
                 }
                 ?>
             </table>
         </div>
-            
-        <?php
+   
+    <?php
     }
 
     // Retrieve and display other passengers' data
@@ -448,5 +446,6 @@
 <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 crossorigin="anonymous"></script>
+
 </body>
 </html>
