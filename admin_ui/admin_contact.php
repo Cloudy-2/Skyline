@@ -70,7 +70,7 @@
                 }
             } else {
                 // If no contact records found, display a message
-                echo "<tr><td colspan='5'>No contact information found</td></tr>";
+                echo "<tr><td colspan='5'>No contact found</td></tr>";
             }
 
             mysqli_close($conn);

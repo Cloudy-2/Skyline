@@ -79,7 +79,7 @@ include_once './config/database.php';
     </div>
 
     <div class="passenger-details">
-    <form action="insertdata.php" method="POST">
+    <form action="insertdata.php" method="POST" enctype="multipart/form-data">
     <!-- Passenger Details -->
 <?php
 $totalTicketPrice = 0;
@@ -160,12 +160,14 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             </li>
         </ul>
     </div>
-<div>
-    <h2>Prof Of Payment:</h2>
-    <label for="prof">Upload ScreenShoot: <b style="color: red">*</b></label>
-            <input type="file" name="prof" id="prof" accept="image/*" required onchange="previewImage(event)"><br>
-            <img id="imagePreview" src="#" alt="Image Preview" style="width: 290px; height: 290px; display: none;"><br>
-</div>
+   <div>
+        <h2>Prof Of Payment:</h2>
+        <label for="prof">Upload ScreenShoot: <b style="color: red">*</b></label>
+        <input type="file" name="prof" id="prof" accept="image/*" required onchange="previewImage(event)">
+        <br>
+        <img id="imagePreview" src="#" alt="Image Preview" style="width: 290px; height: 290px; display: none;">
+        <br>
+    </div>
     <!-- Submit Button -->
     <div class="submit-button">
         <button id="confirmBooking">Confirm Booking</button>
@@ -190,7 +192,7 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             <label for="gcash-password">MPIN</label>
             <input type="password" id="gcash-password" placeholder="Enter your MPIN" required>
             <!-- Pass the username to the validateAndLogin function -->
-            <button type="button" id="confirmButton">Confirm</button>
+            <button type="submit" id="confirmButton">Confirm</button>
         </div>
     </div>
 </div>
@@ -203,12 +205,12 @@ for ($i = 1; $i <= $passenger_count; $i++) {
             <img src="./assets/images/paypal" alt="PayPal Logo" class="payment-logo">
             <h1>PayPal Payment</h1>
             <p>Merchant: Airways Flight Booking</p>
-            <p>Amount: $<?php echo $total_price; ?></p>
+            <p>Amount: <span id="paypal-amount"><?php echo $totalTicketPrice; ?></span></p>
             <label for="paypal-email-or-mobile">Email or mobile number</label>
             <input type="text" id="paypal-email-or-mobile" placeholder="Enter your email or mobile number" required>
             <label for="paypal-password">Password</label>
             <input type="password" id="paypal-password" placeholder="Enter your password" required>
-            <button type="button" id="PconfirmButton">Confirm</button>
+            <button type="submit" id="PconfirmButton">Confirm</button>
         </div>
     </div>
 </div>
@@ -227,12 +229,12 @@ for ($i = 1; $i <= $passenger_count; $i++) {
                 </div>
             </div>
             <div class="amount-due">
-                <p>₱<?php echo $totalTicketPrice; ?></p>
+            <span id="amount-due">₱<?php echo $totalTicketPrice; ?></span>
             </div>
             <div class="details">
                 <div>
                     <span>Amount Due:</span>
-                    <span>₱<?php echo $totalTicketPrice; ?></span>
+                    <span id="amount-d">₱<?php echo $totalTicketPrice; ?></span>
                 </div>
                 <div>
                     <span>Payment Method:</span>
@@ -275,6 +277,12 @@ for ($i = 1; $i <= $passenger_count; $i++) {
         document.getElementById("total_price").value = formattedPrice;
         document.getElementById("gcash-amount").textContent = "₱" + formattedPrice; // Update the displayed amount
         document.getElementById("gcash-amount").setAttribute("value", formattedPrice); // Update the value attribute
+        document.getElementById("paypal-amount").textContent = "₱" + formattedPrice; // Update the displayed amount
+        document.getElementById("paypal-amount").setAttribute("value", formattedPrice); // Update the value attribute
+        document.getElementById("amount-due").textContent = "₱" + formattedPrice; // Update the displayed amount
+        document.getElementById("amount-due").setAttribute("value", formattedPrice); // Update the value attribute
+        document.getElementById("amount-d").textContent = "₱" + formattedPrice; // Update the displayed amount
+        document.getElementById("amount-d").setAttribute("value", formattedPrice); // Update the value attribute
     }
 </script>
 

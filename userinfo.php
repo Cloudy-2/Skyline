@@ -102,7 +102,7 @@ if ($results->num_rows > 0) {
             ?>
             <!-- ID Picture section -->
             <label for="idimg">ID Picture:</label>
-            <div for="idimg" class="ID">
+            <div for="image" class="ID">
                 <input type="image" name="idimg" id="idimg" style="width: 400px; height: 400px" src="data:image/jpeg;base64,<?php echo base64_encode($row['reg_idUpload']); ?>" alt="ID Picture"><br>
             </div>
             <label for="prof">Prof of Payment</label>

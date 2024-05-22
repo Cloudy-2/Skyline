@@ -212,7 +212,8 @@
                         <td>₱ <?= $main_passenger_data['total_price'] ?></td>
                         <td><?= $main_passenger_data['Status'] ?></td>
                         <td><?= $main_passenger_data['Seat_Number'] ?></td>
-                        <td><?= $main_passenger_data['prof_payment'] ?></td>
+                        <td><img src="data:image/jpeg;base64,<?= base64_encode($main_passenger_data['prof']) ?>" /></td>
+
                         <td class="btn-td">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#seatSelectionModal<?= $main_passenger_data['MainPassenger'] ?>">UPDATE</button>
 

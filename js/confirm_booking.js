@@ -8,13 +8,33 @@ function togglePopup(popupId) {
 }
 
 document.getElementById('confirmButton').addEventListener('click', function() {
+    // Check if the required inputs are filled
+    var mobileNumber = document.getElementById('gcash-mobile-number').value.trim();
+    var mpin = document.getElementById('gcash-password').value.trim();
+    if (mobileNumber === '' || mpin === '') {
+        alert("Please fill in all required fields.");
+        return; // Prevent further execution
+    }
+    
+    // If inputs are filled, proceed with the action
     document.getElementById('gcash-popup').style.display = 'none';
     document.getElementById('unique-receipt-container').style.display = 'block';
 });
+
 document.getElementById('PconfirmButton').addEventListener('click', function() {
+    // Check if the required inputs are filled
+    var emailOrMobile = document.getElementById('paypal-email-or-mobile').value.trim();
+    var password = document.getElementById('paypal-password').value.trim();
+    if (emailOrMobile === '' || password === '') {
+        alert("Please fill in all required fields.");
+        return; // Prevent further execution
+    }
+    
+    // If inputs are filled, proceed with the action
     document.getElementById('paypal-popup').style.display = 'none';
     document.getElementById('unique-receipt-container').style.display = 'block';
 });
+
 document.getElementById('doneButton').addEventListener('click', function() {
     document.getElementById('unique-receipt-container').style.display = 'none';
 });
@@ -72,5 +92,21 @@ function previewImage(event) {
 
     if (fileInput) {
         reader.readAsDataURL(fileInput); // Read the file as a data URL
+    }
+}function closePopupAndUnselectRadio(popupId, radioId) {
+    // Close the popup
+    var popup = document.getElementById(popupId);
+    if (popup) {
+        popup.style.display = "none";
+    } else {
+        console.error("Popup element not found.");
+    }
+
+    // Unselect the radio button
+    var radio = document.getElementById(radioId);
+    if (radio) {
+        radio.checked = false;
+    } else {
+        console.error("Radio button element not found.");
     }
 }
