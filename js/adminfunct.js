@@ -173,3 +173,24 @@ $(document).ready(function(){
         $('#viewModal').modal('show');
     });
 });
+// Define a JavaScript function to handle seat selection
+function handleSeatSelection(mainPassengerId, seatId) {
+    // Check if the seat is already occupied or selected
+    if (document.getElementById(seatId).classList.contains('occupied') || document.getElementById(seatId).classList.contains('selected')) {
+        // If the seat is occupied or selected, do nothing
+        return;
+    }
+
+    // Clear previously selected seats
+    var selectedSeats = document.querySelectorAll('.seat.selected');
+    selectedSeats.forEach(function(seat) {
+        seat.classList.remove('selected');
+    });
+
+    // Mark the selected seat as 'selected'
+    document.getElementById(seatId).classList.add('selected');
+
+    // Update the selected seat number in the dropdown
+    var seatSelectDropdown = document.getElementById('SeatSelect' + mainPassengerId);
+    seatSelectDropdown.value = seatId;
+}

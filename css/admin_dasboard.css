@@ -386,3 +386,65 @@ nav .dropdown .dropbtn:hover {
 td.receipt {
   height: 20px;
 }
+/* Add this CSS to your existing stylesheet */
+.receipt-image {
+  max-width: 100px; /* Adjust as needed */
+  cursor: pointer;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+.seat-map-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.seat-section {
+  margin-bottom: 20px;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Add this CSS to your existing stylesheet */
+.seat {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #c0c0c0; /* Default color */
+  text-align: center;
+  line-height: 40px;
+  margin: 5px;
+}
+
+.seat.occupied {
+  background-color: red;
+}
+
+.selected {
+  background-color: red; /* Change the background color to red */
+  color: white; /* Change the text color to white for better visibility */
+}
+
+
+.middle-line {
+  width: 2px;
+  height: 100px;
+  background-color: #000;
+  margin: 0 auto; /* Center the line horizontally */
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
